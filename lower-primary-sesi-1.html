@@ -1361,18 +1361,23 @@
       });
     }
 
-    [sequenceSource, sequenceTarget].forEach(zone => {
-      zone.addEventListener('dragover', event => event.preventDefault());
-      zone.addEventListener('drop', event => {
-        event.preventDefault();
-        if (!draggedCard) return;
-        if (zone === sequenceTarget) {
-          const hint = zone.querySelector('.mini-note');
-          if (hint) hint.remove();
-        }
-        zone.appendChild(draggedCard);
+    // The current sequence activity uses clickable cards rather than the
+    // older drag-and-drop layout. Only bind drag-and-drop handlers when the
+    // optional source/target containers are present.
+    if (sequenceSource && sequenceTarget) {
+      [sequenceSource, sequenceTarget].forEach(zone => {
+        zone.addEventListener('dragover', event => event.preventDefault());
+        zone.addEventListener('drop', event => {
+          event.preventDefault();
+          if (!draggedCard) return;
+          if (zone === sequenceTarget) {
+            const hint = zone.querySelector('.mini-note');
+            if (hint) hint.remove();
+          }
+          zone.appendChild(draggedCard);
+        });
       });
-    });
+    }
 
     function checkSequence() {
       const cards = [...sequenceTarget.querySelectorAll('.sequence-card')];
