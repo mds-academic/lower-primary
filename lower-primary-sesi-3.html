@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>UOB My Digital Space — Lower Primary Sesi 3</title>
+<link href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;🚦&lt;/text&gt;&lt;/svg&gt;" rel="icon"/>
+<style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --blue: #0056b3;
+      --light-blue: #4a9eff;
+      --uob-red: #e60012;
+      --uob-red-soft: #ff5a6b;
+      --uob-blue-deep: #0056b3;
+      --uob-blue-soft: #5aa7ff;
+      --teal: #11a9b7;
+      --bg: #f5f6f8;
+      --panel: #ffffff;
+      --text: #2c3e50;
+      --muted: #6c757d;
+      --line: #e3e8ef;
+      --green: #2e9d57;
+      --orange: #f39c12;
+      --red: #e74c3c;
+      --purple: #8e44ad;
+      --yellow-soft: #fff8dc;
+      --blue-soft: #eef7ff;
+      --green-soft: #effaf2;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      height: 100vh;
+      overflow: hidden;
+      color: var(--text);
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #f5d7da, #d9e9ff);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, .08);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--uob-red) 0%, var(--uob-red-soft) 28%, var(--uob-blue-deep) 72%, var(--uob-blue-soft) 100%);
+      transition: width .3s ease;
+      box-shadow: 0 0 8px rgba(0, 86, 179, .18);
+    }
+
+    .main-container {
+      display: flex;
+      height: 100vh;
+    }
+
+    .slides-panel {
+      width: 50%;
+      background: #f8f9fa;
+      border-right: 2px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .explanation-panel {
+      width: 50%;
+      background: #fff;
+      overflow-y: auto;
+      padding: 32px;
+    }
+
+    .slide-header {
+      background: #fff;
+      padding: 17px 20px 15px;
+      border-bottom: 2px solid var(--line);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, .04);
+      position: relative;
+    }
+
+    .slide-header::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+      background: linear-gradient(var(--uob-red), var(--light-blue));
+    }
+
+    .slide-header h1 {
+      font-size: 1.28rem;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .slide-header p {
+      font-size: .9rem;
+      color: var(--muted);
+    }
+
+    .header-badge {
+      position: absolute;
+      right: 18px;
+      top: 17px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      border: 1px solid #cce7ff;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-weight: 700;
+      font-size: .76rem;
+    }
+
+    .slide-content {
+      flex: 1;
+      padding: 24px 28px 94px;
+      overflow-y: auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      min-height: 0;
+    }
+
+    .slide,
+    .explanation {
+      display: none;
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+
+    .slide.active,
+    .explanation.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .slide {
+      width: 100%;
+      max-width: 820px;
+    }
+
+    .explanation {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .slide h2 {
+      font-size: 2.25rem;
+      color: var(--blue);
+      margin-bottom: 10px;
+      line-height: 1.15;
+    }
+
+    .slide h3 {
+      font-size: 1.78rem;
+      color: var(--blue);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .slide h4,
+    .explanation h4 {
+      font-size: 1.05rem;
+      margin-bottom: 9px;
+      color: var(--text);
+    }
+
+    .slide p,
+    .explanation p {
+      font-size: 1rem;
+      line-height: 1.58;
+      color: #495057;
+      margin-bottom: 14px;
+    }
+
+    .explanation h3 {
+      font-size: 1.65rem;
+      margin-bottom: 16px;
+      color: var(--text);
+      line-height: 1.25;
+    }
+
+    .slide ul,
+    .slide ol,
+    .explanation ul,
+    .explanation ol {
+      margin-left: 22px;
+      margin-bottom: 10px;
+    }
+
+    .slide li,
+    .explanation li {
+      margin-bottom: 7px;
+      line-height: 1.5;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      color: var(--uob-red);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .lead {
+      font-size: 1.08rem !important;
+    }
+
+    .mini-note {
+      font-size: .9rem !important;
+      color: var(--muted) !important;
+      margin-top: 10px;
+    }
+
+    .visual-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      gap: 13px;
+      margin: 16px 0;
+    }
+
+    .visual-card,
+    .metric-box,
+    .info-box,
+    .example-box,
+    .warning-box,
+    .placeholder-box,
+    .interactive-box,
+    .code-placeholder,
+    .quiz-card {
+      background: #fff;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
+    }
+
+    .visual-card {
+      padding: 15px;
+    }
+
+    .visual-card h4 {
+      margin-bottom: 5px;
+    }
+
+    .visual-card p {
+      margin-bottom: 0;
+      font-size: .92rem;
+      line-height: 1.42;
+    }
+
+    .visual-icon {
+      font-size: 1.9rem;
+      margin-bottom: 8px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .metric-box {
+      padding: 16px 12px;
+      text-align: center;
+    }
+
+    .metric-box strong {
+      display: block;
+      font-size: 1.55rem;
+      color: var(--blue);
+      margin-bottom: 7px;
+    }
+
+    .metric-box span {
+      font-size: .9rem;
+      line-height: 1.35;
+      color: #495057;
+      display: block;
+    }
+
+    .info-box,
+    .example-box,
+    .warning-box,
+    .interactive-box {
+      padding: 17px;
+      margin: 16px 0;
+    }
+
+    .info-box {
+      border-left: 5px solid var(--light-blue);
+    }
+
+    .example-box {
+      border-left: 5px solid var(--green);
+      background: #f8fff8;
+    }
+
+    .warning-box {
+      border-left: 5px solid var(--orange);
+      background: #fffaf0;
+    }
+
+    .interactive-box {
+      border-left: 5px solid var(--purple);
+      background: #fcf8ff;
+    }
+
+    .placeholder-box {
+      min-height: 215px;
+      padding: 24px;
+      margin: 14px 0;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border-style: dashed;
+      background: linear-gradient(135deg, #fbfdff, #f5f9fc);
+    }
+
+    .placeholder-box .placeholder-icon {
+      font-size: 2.3rem;
+      margin-bottom: 8px;
+    }
+
+    .placeholder-box strong {
+      display: block;
+      color: var(--blue);
+      margin-bottom: 5px;
+    }
+
+    .placeholder-box small {
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .code-placeholder {
+      min-height: 230px;
+      padding: 22px;
+      margin: 14px 0;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border-style: dashed;
+      border-color: #9ab7d3;
+      background: #f8fbfe;
+    }
+
+    .code-placeholder strong {
+      color: var(--blue);
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .code-placeholder code {
+      color: var(--muted);
+      background: #eef3f8;
+      padding: 3px 7px;
+      border-radius: 5px;
+    }
+
+    .pseudo-list {
+      list-style: none;
+      margin-left: 0 !important;
+      counter-reset: pseudo;
+    }
+
+    .pseudo-list li {
+      counter-increment: pseudo;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 10px 12px 10px 44px;
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .pseudo-list li::before {
+      content: counter(pseudo);
+      position: absolute;
+      left: 11px;
+      top: 9px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--blue);
+      color: white;
+      font-weight: 800;
+      font-size: .8rem;
+    }
+
+    .navigation {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 2px solid var(--line);
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 -2px 4px rgba(0, 0, 0, .04);
+    }
+
+    .nav-btn {
+      background: var(--light-blue);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      cursor: pointer;
+      font-size: .94rem;
+      font-weight: 700;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      transition: .2s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      background: #357abd;
+    }
+
+    .nav-btn:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .slide-indicator {
+      font-size: .9rem;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .floating-element {
+      position: absolute;
+      opacity: .07;
+      pointer-events: none;
+      font-size: 2rem;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0);
+      }
+
+      33% {
+        transform: translateY(-12px) rotate(4deg);
+      }
+
+      66% {
+        transform: translateY(7px) rotate(-3deg);
+      }
+    }
+
+    /* Access popup — mengikuti template */
+    .access-popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .8);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .access-popup {
+      background: white;
+      border: 3px solid var(--light-blue);
+      border-radius: 15px;
+      padding: 38px;
+      max-width: 450px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .3);
+      transform: scale(.8);
+      opacity: 0;
+      transition: all .3s ease;
+    }
+
+    .access-popup.show {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .access-popup h2 {
+      color: var(--text);
+      margin-bottom: 13px;
+      font-size: 1.8rem;
+    }
+
+    .access-popup p {
+      color: #666;
+      margin-bottom: 22px;
+      line-height: 1.55;
+    }
+
+    .access-input {
+      width: 100%;
+      padding: 14px;
+      font-size: 1.15rem;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      text-align: center;
+      letter-spacing: 2px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .access-input:focus {
+      outline: none;
+      border-color: var(--light-blue);
+      box-shadow: 0 0 0 3px rgba(74, 158, 255, .12);
+    }
+
+    .access-submit {
+      background: var(--light-blue);
+      color: white;
+      border: none;
+      padding: 13px 28px;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .access-submit:hover {
+      background: #357abd;
+    }
+
+    .access-error {
+      color: var(--red);
+      margin-top: 13px;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity .2s;
+    }
+
+    .access-error.show {
+      opacity: 1;
+    }
+
+    .access-hint {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 5px;
+      padding: 9px;
+      margin-top: 18px;
+      font-size: .88rem;
+      color: #856404;
+    }
+
+    /* Scratch interface hotspots */
+    .scratch-map-wrap {
+      position: relative;
+      width: 100%;
+      margin: 12px auto;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+    }
+
+    .scratch-map-wrap img {
+      width: 100%;
+      display: block;
+    }
+
+    .hotspot {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      background: var(--uob-red);
+      color: white;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 3px 9px rgba(0, 0, 0, .35);
+      display: grid;
+      place-items: center;
+      transform: translate(-50%, -50%);
+      transition: transform .16s, background .16s;
+    }
+
+    .hotspot:hover,
+    .hotspot.active {
+      transform: translate(-50%, -50%) scale(1.16);
+      background: var(--blue);
+    }
+
+    .hotspot:focus-visible {
+      outline: 3px solid #ffd166;
+      outline-offset: 2px;
+    }
+
+    .scratch-caption {
+      text-align: center;
+      font-size: .85rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .area-live-card {
+      min-height: 140px;
+      border: 2px solid #cfe7fb;
+      background: var(--blue-soft);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    .area-live-card .area-number {
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--uob-red);
+      color: white;
+      font-weight: 900;
+      margin-right: 7px;
+    }
+
+    /* Interactive choice buttons */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .choice-btn {
+      border: 2px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 11px 12px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: .18s;
+      text-align: left;
+    }
+
+    .choice-btn:hover {
+      border-color: var(--light-blue);
+      transform: translateY(-1px);
+    }
+
+    .choice-btn.correct {
+      border-color: var(--green);
+      background: var(--green-soft);
+      color: #176b35;
+    }
+
+    .choice-btn.wrong {
+      border-color: var(--red);
+      background: #fff1f0;
+      color: #a42820;
+    }
+
+    .feedback-line {
+      min-height: 28px;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .form-grid label {
+      font-weight: 700;
+      font-size: .9rem;
+      color: var(--text);
+    }
+
+    .form-grid input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      margin-top: 5px;
+    }
+
+    .form-grid input:focus {
+      outline: none;
+      border-color: var(--light-blue);
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .primary-btn {
+      background: var(--blue);
+      color: white;
+    }
+
+    .secondary-btn {
+      background: #e9ecef;
+      color: var(--text);
+    }
+
+    .intro-preview {
+      min-height: 80px;
+      padding: 14px;
+      border: 2px dashed #9ab7d3;
+      border-radius: 10px;
+      background: #f8fbfe;
+      margin-top: 10px;
+      font-size: 1.04rem;
+      line-height: 1.5;
+    }
+
+    /* Drag sequence */
+    .sequence-source,
+    .sequence-target {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .sequence-card {
+      padding: 10px 12px;
+      border: 2px solid var(--line);
+      background: #fff;
+      border-radius: 9px;
+      cursor: grab;
+      user-select: none;
+      font-weight: 700;
+    }
+
+    .sequence-card.dragging {
+      opacity: .45;
+    }
+
+    .sequence-target {
+      min-height: 170px;
+      border: 2px dashed #a9bfd2;
+      background: #f8fbfe;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .sequence-target .sequence-card {
+      cursor: grab;
+    }
+
+    .checklist {
+      list-style: none;
+      margin-left: 0 !important;
+      display: grid;
+      gap: 8px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .check-item input {
+      margin-top: 3px;
+      transform: scale(1.2);
+    }
+
+    .check-item.done {
+      background: var(--green-soft);
+      border-color: #9cd9af;
+      text-decoration: line-through;
+      color: #3e6b4c;
+    }
+
+    .debug-scenario {
+      display: none;
+    }
+
+    .debug-scenario.active {
+      display: block;
+    }
+
+    .debug-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .debug-tab {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 999px;
+      padding: 7px 11px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .debug-tab.active {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: .78rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 2px;
+    }
+
+    .pill.blue {
+      background: var(--blue);
+    }
+
+    .pill.green {
+      background: var(--green);
+    }
+
+    .pill.orange {
+      background: var(--orange);
+    }
+
+    .pill.purple {
+      background: var(--purple);
+    }
+
+    @media (max-width: 960px) {
+      body {
+        overflow: auto;
+        height: auto;
+      }
+
+      .main-container {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+      }
+
+      .slides-panel,
+      .explanation-panel {
+        width: 100%;
+        height: auto;
+        min-height: 50vh;
+      }
+
+      .slides-panel {
+        min-height: 100vh;
+      }
+
+      .slide-content {
+        padding: 20px 20px 92px;
+      }
+
+      .explanation-panel {
+        padding: 24px;
+      }
+
+      .header-badge {
+        display: none;
+      }
+    }
+
+    /* INTERAKSI GAMBAR LMS */
+
+    .lms-map-wrap {
+      position: relative;
+    }
+
+    .session-card-hotspot {
+      position: absolute;
+      left: 19.1%;
+      top: 43%;
+      width: 25.5%;
+      height: 51%;
+      padding: 0;
+      border: 3px dashed transparent;
+      border-radius: 12px;
+      background: transparent;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .session-card-hotspot span {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+
+      width: 32px;
+      height: 32px;
+
+      display: grid;
+      place-items: center;
+
+      border: 3px solid #ffffff;
+      border-radius: 50%;
+
+      background: var(--uob-red);
+      color: #ffffff;
+
+      font-size: 0.9rem;
+      font-weight: 900;
+
+      box-shadow: 0 3px 9px rgba(0, 0, 0, 0.35);
+    }
+
+    .session-card-hotspot:hover,
+    .session-card-hotspot.active {
+      border-color: var(--uob-red);
+      background: rgba(230, 0, 18, 0.08);
+    }
+
+    .session-card-hotspot:hover span,
+    .session-card-hotspot.active span {
+      background: var(--blue);
+      transform: scale(1.1);
+    }
+
+    .session-card-hotspot:focus-visible {
+      outline: 4px solid #ffd166;
+      outline-offset: 3px;
+    }
+
+    /* INTERAKSI GAMBAR PRETEST */
+
+    .test-map-wrap {
+      position: relative;
+    }
+
+    .test-card-hotspot {
+      position: absolute;
+
+      /* Posisi kartu [26/27] Pre-Test Upper Primary */
+      left: 18%;
+      right: 3%;
+      bottom: 5%;
+      height: 20%;
+
+      padding: 0;
+      border: 3px dashed transparent;
+      border-radius: 14px;
+      background: transparent;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    /* Nomor langkah */
+    .test-number {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+
+      width: 36px;
+      height: 36px;
+
+      display: grid;
+      place-items: center;
+
+      border: 3px solid #ffffff;
+      border-radius: 50%;
+
+      background: var(--uob-red);
+      color: #ffffff;
+
+      font-size: 1rem;
+      font-weight: 900;
+
+      box-shadow: 0 3px 9px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Efek saat diarahkan atau diklik */
+    .test-card-hotspot:hover,
+    .test-card-hotspot.active {
+      border-color: var(--uob-red);
+      background: rgba(230, 0, 18, 0.08);
+    }
+
+    .test-card-hotspot:hover .test-number,
+    .test-card-hotspot.active .test-number {
+      background: var(--blue);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .test-card-hotspot:focus-visible {
+      outline: 4px solid #ffd166;
+      outline-offset: 3px;
+    }
+
+    .test-instruction {
+      position: absolute;
+      left: 50%;
+      bottom: 12px;
+      transform: translateX(-50%);
+
+      width: 88%;
+      padding: 7px 9px;
+
+      border-radius: 8px;
+      background: rgba(0, 86, 179, 0.94);
+      color: #ffffff;
+
+      font-size: 0.76rem;
+      line-height: 1.3;
+      font-weight: 800;
+      text-align: center;
+
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .test-card-hotspot:hover,
+    .test-card-hotspot.active {
+      border-color: var(--uob-red);
+      background: rgba(230, 0, 18, 0.08);
+    }
+
+    .test-card-hotspot:hover .test-number,
+    .test-card-hotspot.active .test-number {
+      background: var(--blue);
+      transform: scale(1.1);
+    }
+
+    .test-card-hotspot:hover .test-instruction,
+    .test-card-hotspot.active .test-instruction {
+      background: var(--uob-red);
+    }
+  
+    .lower-hero{background:linear-gradient(135deg,#eef7ff 0%,#fff8f8 100%);border:2px solid var(--line);border-radius:18px;padding:18px;margin-top:14px}
+    .image-placeholder{border:2px dashed #9ab7d3;border-radius:16px;background:#f8fbfe;min-height:190px;display:grid;place-items:center;text-align:center;padding:20px;color:var(--muted);margin:14px 0}
+    .image-placeholder strong{display:block;color:var(--blue);font-size:1.05rem;margin-bottom:6px}
+    .code-pseudo{background:#111827;color:#f8fafc;border-radius:15px;padding:15px;margin:14px 0;font-family:Consolas,Monaco,monospace;line-height:1.55;box-shadow:0 8px 16px rgba(0,0,0,.12);white-space:pre-wrap}
+    .pseudo-line{padding:7px 9px;border-radius:8px;margin:5px 0;background:rgba(255,255,255,.06)}
+    .pseudo-green{border-left:6px solid #20c77a}.pseudo-blue{border-left:6px solid #4a9eff}.pseudo-purple{border-left:6px solid #a96cff}
+    .codejr-map{display:grid;grid-template-columns:1.1fr 1fr;gap:12px;background:#f8fbfe;border:2px solid var(--line);border-radius:16px;padding:14px;margin:14px 0}
+    .codejr-screen{min-height:245px;border:2px solid #9ab7d3;border-radius:14px;background:linear-gradient(180deg,#dff2ff 0 58%,#cce9b9 58% 100%);position:relative;overflow:hidden}
+    .codejr-screen::after{content:"STAGE / PANGGUNG";position:absolute;top:10px;left:10px;background:rgba(255,255,255,.88);padding:5px 8px;border-radius:8px;font-size:.72rem;font-weight:900;color:var(--blue)}
+    .codejr-sprite{position:absolute;left:50%;top:53%;transform:translate(-50%,-50%);font-size:3.3rem}
+    .codejr-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+    .codejr-hotspot{border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px;cursor:pointer;text-align:left;font-weight:800;transition:.16s ease}
+    .codejr-hotspot:hover,.codejr-hotspot.active{border-color:var(--blue);background:var(--blue-soft);transform:translateY(-1px)}
+    .codejr-info{background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;min-height:180px}
+    .sequence-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:14px 0}
+    .sequence-card{background:#fff;border:2px solid var(--line);border-radius:12px;padding:11px 13px;font-weight:800;min-width:125px;text-align:center;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.05)}
+    .sequence-card.selected{border-color:var(--uob-red);background:#fff3f4}
+    .sequence-arrow{color:var(--uob-red);font-size:1.25rem;font-weight:900}
+    .privacy-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+    .privacy-card{border:2px solid var(--line);background:#fff;border-radius:12px;padding:12px;cursor:pointer;font-weight:800;transition:.15s ease}
+    .privacy-card:hover{transform:translateY(-1px)}
+    .privacy-card.safe.selected{border-color:var(--green);background:var(--green-soft)}
+    .privacy-card.secret.selected{border-color:var(--uob-red);background:#fff2f3}
+    @media(max-width:960px){.codejr-map,.privacy-grid{grid-template-columns:1fr}}
+
+    .compact-table{width:100%;border-collapse:collapse;margin:14px 0;background:#fff;border:2px solid var(--line);border-radius:12px;overflow:hidden}
+    .compact-table th,.compact-table td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top;font-size:.95rem;line-height:1.45}.compact-table th{background:var(--blue);color:#fff}
+    .flow-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:14px 0}.flow-step{background:#fff;border:2px solid var(--line);border-radius:12px;padding:11px 13px;font-weight:800;min-width:110px;text-align:center}.flow-arrow{font-weight:900;color:var(--uob-red);font-size:1.35rem}
+    .traffic-sim{border:2px solid var(--line);border-radius:16px;background:linear-gradient(#dff3ff 0 52%,#d8efbd 52% 68%,#505967 68% 100%);min-height:300px;position:relative;overflow:hidden;margin:14px 0}
+    .traffic-road-line{position:absolute;left:0;right:0;bottom:48px;height:4px;background:repeating-linear-gradient(90deg,#fff 0 40px,transparent 40px 76px);opacity:.85}
+    .traffic-light-shell{position:absolute;right:15%;bottom:75px;width:66px;background:#242b35;border-radius:14px;padding:8px;box-shadow:0 8px 18px rgba(0,0,0,.2)}
+    .traffic-lamp{width:42px;height:42px;border-radius:50%;margin:6px auto;background:#535c69;border:3px solid #111827;opacity:.35}.traffic-lamp.red.active{background:#ef3340;opacity:1}.traffic-lamp.yellow.active{background:#ffd84d;opacity:1}.traffic-lamp.green.active{background:#35b75b;opacity:1}
+    .traffic-pole{position:absolute;right:calc(15% + 27px);bottom:33px;width:9px;height:48px;background:#3d4654}
+    .traffic-car{position:absolute;left:8%;bottom:35px;font-size:4.2rem;transform:translateX(0);transition:transform .9s ease;filter:drop-shadow(0 7px 3px rgba(0,0,0,.18))}.traffic-car.at-light{transform:translateX(205px)}.traffic-car.past-light{transform:translateX(385px)}
+    .traffic-label{position:absolute;left:18px;top:18px;background:rgba(255,255,255,.92);border:2px solid var(--line);border-radius:12px;padding:9px 12px;font-weight:900;color:var(--blue);max-width:62%}
+    .sim-controls{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.sim-btn{border:2px solid var(--line);background:#fff;border-radius:10px;padding:10px 13px;font-weight:800;cursor:pointer}.sim-btn:hover{border-color:var(--light-blue)}.sim-btn.red{border-color:#f0a0a7}.sim-btn.yellow{border-color:#f5d978}.sim-btn.green{border-color:#91d5a6}.sim-btn.blue{border-color:#9fc8f2}
+    .timer-circle{width:128px;height:128px;border-radius:50%;display:grid;place-items:center;margin:14px auto;background:#fff;border:8px solid #ffd7a1;font-size:2rem;font-weight:900;color:var(--orange);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+    .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}.compare-card{border:2px solid var(--line);border-radius:14px;background:#fff;padding:14px}.compare-track{height:90px;border-radius:12px;background:linear-gradient(#dff3ff 0 47%,#606a77 47% 100%);position:relative;overflow:hidden;margin:10px 0}.compare-car{position:absolute;left:10px;bottom:5px;font-size:2.8rem;transition:transform .8s ease}.compare-car.run{transform:translateX(180px)}.compare-car.stop{transform:translateX(85px)}
+    .block-stack-lp{display:grid;gap:9px;margin:14px 0}.jr-block{padding:12px 14px;border-radius:12px;font-weight:900;border:2px solid rgba(0,0,0,.08);box-shadow:0 4px 0 rgba(0,0,0,.08)}.jr-yellow{background:#ffd84d}.jr-blue{background:#67aef8;color:#fff}.jr-orange{background:#ffb45b}.jr-red{background:#e85d68;color:#fff}.jr-purple{background:#ab81e8;color:#fff}
+    .script-demo{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:14px 0}.script-chip{padding:10px 12px;border-radius:10px;font-weight:900;border:2px solid rgba(0,0,0,.08)}
+    .roleplay-card{border:2px solid var(--line);border-radius:14px;background:#fff;padding:17px;text-align:center;margin:14px 0}.roleplay-light{font-size:5rem;margin:8px 0}.roleplay-action{font-size:1.2rem;font-weight:900;color:var(--blue);min-height:35px}
+    .two-option{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}.option-card{border:2px solid var(--line);border-radius:14px;padding:15px;background:#fff}.option-card h4{color:var(--blue)}
+    .problem-map{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.problem-card{border:2px solid var(--line);background:#fff;border-radius:12px;padding:12px;font-weight:800;cursor:pointer}.problem-card.selected{border-color:var(--blue);background:var(--blue-soft)}
+    .project-preview{border:2px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;margin:14px 0}.preview-stage{height:230px;background:linear-gradient(#dfefff 0 42%,#e8dfbd 42% 58%,#626a75 58% 100%);position:relative}.preview-car{position:absolute;left:8%;bottom:23px;font-size:4rem;transition:transform .8s ease}.preview-car.p1{transform:translateX(190px)}.preview-car.p2{transform:translateX(360px)}.preview-light{position:absolute;right:19%;bottom:55px;font-size:4rem}.preview-status{padding:12px 14px;font-weight:900;color:var(--blue);min-height:48px}
+    @media(max-width:960px){.compare-grid,.two-option,.problem-map{grid-template-columns:1fr}.traffic-car.past-light{transform:translateX(280px)}}
+</style>
+</head>
+<body>
+<div class="access-popup-overlay" id="accessPopup"><div class="access-popup"><h2>🔐 Kode Akses</h2><p>Masukkan kode akses Lower Primary untuk membuka materi Sesi 3.</p><input autocomplete="off" class="access-input" id="accessInput" maxlength="20" placeholder="MASUKKAN KODE" type="text"/><button class="access-submit" onclick="checkAccessCode()">Masuk</button><div class="access-error" id="accessError">Kode akses belum tepat. Coba lagi, ya.</div><div class="access-hint">Kode akses diberikan oleh guru.</div></div></div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="main-container" id="mainContent" style="display:none;">
+<div class="slides-panel"><div class="slide-header"><h1>UOB My Digital Space — Lower Primary</h1><p>Sesi 3 · Berhenti Dulu, Baru Jalan Lagi</p><span class="header-badge">ScratchJr · Wait &amp; Timing</span></div><div class="slide-content"><div class="floating-element" style="top:12%;left:7%;">🚗</div><div class="floating-element" style="top:18%;right:10%;">🚦</div><div class="floating-element" style="bottom:25%;left:14%;">⏱️</div><div class="floating-element" style="bottom:15%;right:16%;">🧩</div>
+<section class="slide active" id="slide-1"><span class="eyebrow">Sesi 3</span><h2>Berhenti Dulu, Baru Jalan Lagi</h2><p class="lead">Hari ini kita bantu mobil Pak Budi tahu kapan harus jalan, berhenti sebentar, lalu jalan lagi.</p><div class="metrics"><div class="metric-box"><strong>🚗</strong><span>Mobil bergerak</span></div><div class="metric-box"><strong>🛑</strong><span>Berhenti sebentar</span></div><div class="metric-box"><strong>⏱️</strong><span>Atur timing</span></div><div class="metric-box"><strong>🧩</strong><span>Susun Wait Block</span></div></div><div class="lower-hero"><h4>Misi hari ini</h4><p>Buat mobil berjalan ke arah lampu, menunggu saat merah, lalu melanjutkan perjalanan.</p></div></section>
+<section class="slide" id="slide-2"><h3>Misi Belajar Hari Ini</h3><div class="visual-grid"><div class="visual-card"><div class="visual-icon">🚦</div><h4>Kenal aturan lampu</h4><p>Merah berhenti, kuning bersiap, hijau jalan.</p></div><div class="visual-card"><div class="visual-icon">⏸️</div><h4>Kenal Wait</h4><p>Wait membuat sprite diam sebentar.</p></div><div class="visual-card"><div class="visual-icon">⏱️</div><h4>Kenal timing</h4><p>Mengatur berapa lama menunggu.</p></div><div class="visual-card"><div class="visual-icon">🧩</div><h4>Buat project</h4><p>Susun blok jalan → tunggu → jalan lagi.</p></div></div><div class="info-box"><h4>Target project</h4><p>Mobil berhenti di dekat lampu, menunggu, lalu bergerak lagi setelah jeda.</p></div></section>
+<section class="slide" id="slide-3"><h3>Pak Budi Sampai di Lampu Merah</h3><p class="lead">Mobil Pak Budi sedang berjalan. Di depan, lampu lalu lintas berwarna merah. Apa yang harus dilakukan?</p><div class="traffic-sim"><div class="traffic-label">🚗 Pak Budi mendekati perempatan.</div><div class="traffic-road-line"></div><div class="traffic-light-shell"><div class="traffic-lamp red active"></div><div class="traffic-lamp yellow"></div><div class="traffic-lamp green"></div></div><div class="traffic-pole"></div><div class="traffic-car at-light">🚗</div></div><div class="choice-grid"><button class="choice-btn" onclick="quizChoice(this,true,'storyFeedback','Betul. Saat lampu merah, mobil perlu berhenti dan menunggu.')">Berhenti dan menunggu</button><button class="choice-btn" onclick="quizChoice(this,false,'storyFeedback','Belum tepat. Lampu merah berarti kendaraan harus berhenti.')">Tetap melaju</button><button class="choice-btn" onclick="quizChoice(this,false,'storyFeedback','Lampu merah bukan tanda untuk berputar-putar.')">Berputar-putar</button></div><div class="feedback-line" id="storyFeedback">Pilih tindakan yang paling aman.</div></section>
+<section class="slide" id="slide-4"><h3>Coba Jadi Pengatur Lampu</h3><p class="lead">Klik warna lampu. Lihat apa yang dilakukan mobil.</p><div class="traffic-sim" id="trafficPlay"><div class="traffic-label" id="trafficPlayLabel">Klik warna lampu di bawah.</div><div class="traffic-road-line"></div><div class="traffic-light-shell"><div class="traffic-lamp red active" id="lampRed"></div><div class="traffic-lamp yellow" id="lampYellow"></div><div class="traffic-lamp green" id="lampGreen"></div></div><div class="traffic-pole"></div><div class="traffic-car at-light" id="trafficCar">🚗</div></div><div class="sim-controls"><button class="sim-btn red" onclick="setTraffic('red')">🔴 Merah</button><button class="sim-btn yellow" onclick="setTraffic('yellow')">🟡 Kuning</button><button class="sim-btn green" onclick="setTraffic('green')">🟢 Hijau</button><button class="sim-btn blue" onclick="resetTraffic()">↺ Reset</button></div><div class="feedback-line" id="trafficFeedback">Merah = berhenti. Coba warna lain.</div></section>
+<section class="slide" id="slide-5"><h3>Merah, Kuning, Hijau</h3><div class="visual-grid"><div class="visual-card"><div class="visual-icon">🔴</div><h4>Merah</h4><p>Berhenti dan tunggu.</p></div><div class="visual-card"><div class="visual-icon">🟡</div><h4>Kuning</h4><p>Bersiap dan lebih hati-hati.</p></div><div class="visual-card"><div class="visual-icon">🟢</div><h4>Hijau</h4><p>Jalan jika keadaan aman.</p></div></div><div class="interactive-box"><h4>Quick check</h4><p>Warna mana yang paling cocok dengan fungsi Wait?</p><div class="choice-grid"><button class="choice-btn" onclick="quizChoice(this,true,'lightQuiz','Betul. Wait mirip saat kita berhenti sebentar di lampu merah.')">Merah</button><button class="choice-btn" onclick="quizChoice(this,false,'lightQuiz','Coba lagi. Hijau berarti jalan.')">Hijau</button><button class="choice-btn" onclick="quizChoice(this,false,'lightQuiz','Kuning berarti bersiap, bukan jeda utama kita.')">Kuning</button></div><div class="feedback-line" id="lightQuiz"></div></div></section>
+<section class="slide" id="slide-6"><h3>Wait = Berhenti Sebentar</h3><p class="lead">Wait bukan berarti project selesai. Sprite hanya diam sebentar, lalu blok berikutnya tetap berjalan.</p><div class="flow-row"><div class="flow-step">➡️ Jalan</div><div class="flow-arrow">→</div><div class="flow-step">⏸️ Wait</div><div class="flow-arrow">→</div><div class="flow-step">➡️ Jalan lagi</div></div><div class="choice-grid"><button class="choice-btn" onclick="quizChoice(this,true,'waitMeaning','Betul. Setelah waktu Wait selesai, program lanjut ke blok berikutnya.')">Diam sebentar lalu lanjut</button><button class="choice-btn" onclick="quizChoice(this,false,'waitMeaning','Belum. Kalau project selesai, blok setelahnya tidak akan dijalankan.')">Berhenti selamanya</button></div><div class="feedback-line" id="waitMeaning"></div></section>
+<section class="slide" id="slide-7"><h3>Timing = Mengatur Waktu</h3><p class="lead">Angka pada blok Wait membantu kita menentukan lama jeda.</p><div class="visual-grid"><div class="visual-card"><div class="visual-icon">1️⃣</div><h4>Wait kecil</h4><p>Jeda terasa cepat.</p></div><div class="visual-card"><div class="visual-icon">3️⃣</div><h4>Wait sedang</h4><p>Jeda lebih mudah terlihat.</p></div><div class="visual-card"><div class="visual-icon">5️⃣</div><h4>Wait lebih besar</h4><p>Sprite menunggu lebih lama.</p></div></div><div class="warning-box"><h4>Jangan tertukar</h4><p>Angka pada <strong>Wait</strong> mengatur jeda. Angka pada <strong>Move</strong> mengatur gerakan atau jarak.</p></div></section>
+<section class="slide" id="slide-8"><h3>Coba Timer Wait</h3><p class="lead">Pilih lama jeda, lalu lihat hitungannya.</p><div class="timer-circle" id="waitTimer">READY</div><div class="sim-controls" style="justify-content:center"><button class="sim-btn" onclick="runTimer(1)">Wait 1</button><button class="sim-btn" onclick="runTimer(3)">Wait 3</button><button class="sim-btn" onclick="runTimer(5)">Wait 5</button></div><div class="feedback-line" id="timerFeedback">Pilih satu nilai Wait.</div></section>
+<section class="slide" id="slide-9"><h3>Tanpa Wait vs Dengan Wait</h3><p class="lead">Jalankan dua contoh. Mana yang terlihat seperti mobil menaati lampu merah?</p><div class="compare-grid"><div class="compare-card"><h4>Tanpa Wait</h4><div class="compare-track"><div class="compare-car" id="carNoWait">🚗</div></div><button class="primary-btn" onclick="runCompare(false)">Coba Tanpa Wait</button><p class="mini-note" id="noWaitText">Mobil langsung lewat.</p></div><div class="compare-card"><h4>Dengan Wait</h4><div class="compare-track"><div class="compare-car" id="carWithWait">🚗</div></div><button class="primary-btn" onclick="runCompare(true)">Coba Dengan Wait</button><p class="mini-note" id="withWaitText">Mobil berhenti sebentar dulu.</p></div></div></section>
+<section class="slide" id="slide-10"><h3>Aktivitas Mini: Jadi Mobil Pintar</h3><p class="lead">Klik “Warna berikutnya”. Lalu lakukan gerakan yang cocok.</p><div class="roleplay-card"><div class="roleplay-light" id="roleplayLight">🚦</div><div class="roleplay-action" id="roleplayAction">Siap?</div><button class="primary-btn" onclick="nextRoleplay()">Warna Berikutnya</button></div><div class="info-box"><h4>Aturannya</h4><ul><li>Hijau: jalan di tempat.</li><li>Merah: diam.</li><li>Kuning: bersiap.</li></ul></div></section>
+<section class="slide" id="slide-11"><h3>Rencana Project Lampu Lalu Lintas</h3><div class="visual-grid"><div class="visual-card"><div class="visual-icon">🏙️</div><h4>Background</h4><p>Jalan raya atau perempatan.</p></div><div class="visual-card"><div class="visual-icon">🚗</div><h4>Sprite Mobil</h4><p>Mobil yang akan bergerak.</p></div><div class="visual-card"><div class="visual-icon">🚦</div><h4>Lampu</h4><p>Menjadi tanda kapan berhenti.</p></div><div class="visual-card"><div class="visual-icon">⏱️</div><h4>Wait</h4><p>Membuat mobil menunggu.</p></div></div><div class="example-box"><h4>Alur cerita</h4><p>Mobil jalan → sampai dekat lampu → Wait → jalan lagi.</p></div></section>
+<section class="slide" id="slide-12"><h3>Kenali Blok yang Kita Butuhkan</h3><div class="block-stack-lp"><div class="jr-block jr-yellow">🟨 Green Flag — mulai menjalankan project</div><div class="jr-block jr-blue">🟦 Move Right — mobil bergerak ke kanan</div><div class="jr-block jr-orange">🟧 Wait — mobil berhenti sementara</div><div class="jr-block jr-blue">🟦 Move Right — mobil berjalan lagi</div><div class="jr-block jr-red">🟥 End — rangkaian selesai</div></div><p class="mini-note">Nanti blok asli akan kamu susun di ScratchJr.</p></section>
+<section class="slide" id="slide-13"><h3>Susun Urutan Blok</h3><p class="lead">Blok mana yang harus muncul lebih dulu?</p><div class="sequence-row"><button class="sequence-card" onclick="pickCodeOrder(this,3)">Wait</button><span class="sequence-arrow">→</span><button class="sequence-card" onclick="pickCodeOrder(this,1)">Green Flag</button><span class="sequence-arrow">→</span><button class="sequence-card" onclick="pickCodeOrder(this,2)">Move Right</button><span class="sequence-arrow">→</span><button class="sequence-card" onclick="pickCodeOrder(this,4)">Move Right lagi</button></div><div class="feedback-line" id="codeOrderFeedback">Petunjuk: project perlu tanda mulai dulu.</div><div class="info-box"><h4>Urutan lengkap</h4><p>Green Flag → Move Right → Wait → Move Right → End.</p></div></section>
+<section class="slide" id="slide-14"><h3>Coba Project Mini di Sini</h3><p class="lead">Tekan Mulai. Perhatikan kapan mobil berhenti dan kapan bergerak lagi.</p><div class="project-preview"><div class="preview-stage"><div class="preview-car" id="projectCar">🚗</div><div class="preview-light">🚦</div></div><div class="preview-status" id="projectStatus">Siap memulai.</div></div><div class="sim-controls"><button class="primary-btn" onclick="runProjectPreview()">▶ Mulai</button><button class="secondary-btn" onclick="resetProjectPreview()">↺ Reset</button></div></section>
+<section class="slide" id="slide-15"><h3>Sekarang Buka ScratchJr</h3><p class="lead">Kamu bisa memakai starter project dari guru, atau membuat lampu dengan Paint Editor sesuai arahan.</p><div class="two-option"><div class="option-card"><h4>📂 Starter Project</h4><p>Buka file starter yang diberikan guru. Background, mobil, dan lampu sudah disiapkan.</p></div><div class="option-card"><h4>🎨 Paint Editor</h4><p>Jika diminta guru, buat bentuk lampu menggunakan alat gambar dan warna.</p></div></div><div class="image-placeholder"><div><strong>PLACEHOLDER SCREENSHOT SCRATCHJR / STARTER PROJECT</strong>Masukkan screenshot tampilan project awal Sesi 3 di sini.</div></div><div class="warning-box"><h4>Saat membuka file</h4><p>Minta bantuan guru atau orang tua jika kamu perlu memilih file dari komputer.</p></div></section>
+<section class="slide" id="slide-16"><h3>Langkah 1 — Mulai dan Bergerak</h3><div class="image-placeholder"><div><strong>PLACEHOLDER BLOK SCRATCHJR</strong>Screenshot: Green Flag + Move Right.<br/>Contoh modul menggunakan Move Right menuju area lampu.</div></div><div class="code-pseudo"><div class="pseudo-line pseudo-green">🟨 Green Flag: mulai</div><div class="pseudo-line pseudo-blue">🟦 Move Right: mobil bergerak ke kanan</div></div><div class="info-box"><h4>Checkpoint</h4><p>Jalankan Green Flag. Apakah mobil bergerak mendekati lampu?</p></div></section>
+<section class="slide" id="slide-17"><h3>Langkah 2 — Tambahkan Wait</h3><div class="image-placeholder"><div><strong>PLACEHOLDER BLOK SCRATCHJR</strong>Screenshot: blok Wait setelah Move Right.<br/>Masukkan gambar Wait dengan nilai yang dipakai di kelas.</div></div><div class="code-pseudo"><div class="pseudo-line pseudo-blue">🟦 Move Right</div><div class="pseudo-line" style="border-left:6px solid #ffb45b">🟧 Wait: berhenti sementara</div></div><div class="warning-box"><h4>Posisi Wait penting</h4><p>Wait diletakkan setelah mobil sampai dekat lampu, bukan jauh sebelum lampu atau setelah mobil sudah lewat.</p></div></section>
+<section class="slide" id="slide-18"><h3>Langkah 3 — Jalan Lagi dan Selesai</h3><div class="image-placeholder"><div><strong>PLACEHOLDER BLOK SCRATCHJR</strong>Screenshot: Move Right setelah Wait + End.</div></div><div class="code-pseudo"><div class="pseudo-line" style="border-left:6px solid #ffb45b">🟧 Wait selesai</div><div class="pseudo-line pseudo-blue">🟦 Move Right: lanjut perjalanan</div><div class="pseudo-line" style="border-left:6px solid #e85d68">🟥 End: rangkaian selesai</div></div><div class="info-box"><h4>Checkpoint</h4><p>Setelah jeda, mobil harus bergerak lagi. Kalau tetap diam, cek blok setelah Wait.</p></div></section>
+<section class="slide" id="slide-19"><h3>Rangkaian Blok Lengkap</h3><div class="code-placeholder"><div><strong>PLACEHOLDER SCREENSHOT SCRIPT LENGKAP</strong><small>Masukkan screenshot rangkaian final ScratchJr.</small><ol class="pseudo-list"><li>Green Flag</li><li>Move Right menuju lampu</li><li>Wait</li><li>Move Right lagi</li><li>End</li></ol></div></div><div class="example-box"><h4>Contoh dari modul</h4><p>Modul memakai contoh nilai Move dan Wait untuk membuat mobil datang, menunggu, lalu lanjut. Nilainya boleh disesuaikan dengan posisi sprite di starter project.</p></div></section>
+<section class="slide" id="slide-20"><h3>Testing: Coba dari Awal</h3><ul class="checklist"><li class="check-item"><input type="checkbox" onchange="toggleCheck(this)"/><span>Green Flag membuat mobil mulai bergerak.</span></li><li class="check-item"><input type="checkbox" onchange="toggleCheck(this)"/><span>Mobil berhenti dekat lampu.</span></li><li class="check-item"><input type="checkbox" onchange="toggleCheck(this)"/><span>Wait terlihat sebagai jeda.</span></li><li class="check-item"><input type="checkbox" onchange="toggleCheck(this)"/><span>Setelah jeda, mobil berjalan lagi.</span></li><li class="check-item"><input type="checkbox" onchange="toggleCheck(this)"/><span>Project dijalankan ulang dari awal untuk memastikan hasilnya sama.</span></li></ul><div class="feedback-line" id="testChecklistFeedback">Centang setelah benar-benar diuji.</div></section>
+<section class="slide" id="slide-21"><h3>Detektif Kode</h3><div class="debug-tabs"><button class="debug-tab active" onclick="showDebug(1,this)">🚗 Berhenti terlalu jauh</button><button class="debug-tab" onclick="showDebug(2,this)">⏱️ Menunggu terlalu lama</button><button class="debug-tab" onclick="showDebug(3,this)">▶️ Tidak jalan lagi</button></div><div class="debug-scenario active" id="debug-1"><div class="warning-box"><h4>Masalah</h4><p>Mobil berhenti sebelum sampai dekat lampu.</p></div><div class="choice-grid"><button class="choice-btn" onclick="debugChoice(this,true,'Cek nilai Move sebelum Wait. Move mengatur posisi.')">Cek nilai Move sebelum Wait</button><button class="choice-btn" onclick="debugChoice(this,false,'Wait mengatur waktu, bukan jarak mobil.')">Ubah Wait saja</button></div></div><div class="debug-scenario" id="debug-2"><div class="warning-box"><h4>Masalah</h4><p>Mobil diam terlalu lama.</p></div><div class="choice-grid"><button class="choice-btn" onclick="debugChoice(this,true,'Betul. Kurangi nilai Wait agar jedanya lebih singkat.')">Kurangi nilai Wait</button><button class="choice-btn" onclick="debugChoice(this,false,'Move mengatur gerak, bukan lama menunggu.')">Ganti Move Right</button></div></div><div class="debug-scenario" id="debug-3"><div class="warning-box"><h4>Masalah</h4><p>Mobil berhenti, tetapi tidak bergerak lagi.</p></div><div class="choice-grid"><button class="choice-btn" onclick="debugChoice(this,true,'Betul. Pastikan ada Move Right setelah Wait dan semua blok tersambung.')">Cek Move setelah Wait</button><button class="choice-btn" onclick="debugChoice(this,false,'Mengganti background tidak menyambungkan blok gerak.')">Ganti background</button></div></div><div class="feedback-line" id="debugFeedback">Pilih cara perbaikan yang paling pas.</div></section>
+<section class="slide" id="slide-22"><h3>Move atau Wait?</h3><p class="lead">Klik kartu yang cocok dengan masalahnya.</p><div class="problem-map"><button class="problem-card" onclick="problemChoice(this,'move')">🚗 Mobil berhenti terlalu jauh dari lampu</button><button class="problem-card" onclick="problemChoice(this,'wait')">⏱️ Mobil menunggu terlalu lama</button><button class="problem-card" onclick="problemChoice(this,'move')">➡️ Mobil belum sampai ke posisi yang diinginkan</button><button class="problem-card" onclick="problemChoice(this,'wait')">⏸️ Jeda terasa terlalu cepat</button></div><div class="feedback-line" id="problemFeedback">Move = posisi/jarak. Wait = waktu/jeda.</div></section>
+<section class="slide" id="slide-23"><h3>Simpan Project</h3><div class="visual-grid"><div class="visual-card"><div class="visual-icon">💾</div><h4>Simpan</h4><p>Simpan project setelah testing.</p></div><div class="visual-card"><div class="visual-icon">▶️</div><h4>Coba lagi</h4><p>Jalankan dari Green Flag sekali lagi.</p></div><div class="visual-card"><div class="visual-icon">📤</div><h4>Kumpulkan</h4><p>Ikuti cara pengumpulan dari guru.</p></div><div class="visual-card"><div class="visual-icon">🔒</div><h4>Aman</h4><p>Gunakan file dan akun sesuai arahan guru.</p></div></div><div class="example-box"><h4>Output minimum</h4><p>Mobil bisa berjalan, berhenti sementara dengan Wait, lalu berjalan lagi.</p></div></section>
+<section class="slide" id="slide-24"><h3>Misi Bonus</h3><div class="visual-grid"><div class="visual-card"><div class="visual-icon">⭐</div><h4>Bonus 1</h4><p>Ubah nilai Wait. Apa yang berubah?</p></div><div class="visual-card"><div class="visual-icon">🚧</div><h4>Bonus 2</h4><p>Tambahkan satu rintangan lalu ubah rute agar mobil tidak menabrak.</p></div><div class="visual-card"><div class="visual-icon">⏸️</div><h4>Bonus 3</h4><p>Buat urutan baru dengan dua blok Wait.</p></div></div><div class="interactive-box"><h4>Refleksi cepat</h4><p>Blok apa yang harus diubah jika masalahnya adalah lama menunggu?</p><div class="choice-grid"><button class="choice-btn" onclick="quizChoice(this,true,'reflectFeedback','Betul. Wait mengatur jeda atau waktu menunggu.')">Wait</button><button class="choice-btn" onclick="quizChoice(this,false,'reflectFeedback','Move dipakai untuk gerak atau posisi.')">Move</button><button class="choice-btn" onclick="quizChoice(this,false,'reflectFeedback','Green Flag hanya memulai project.')">Green Flag</button></div><div class="feedback-line" id="reflectFeedback"></div></div></section>
+<section class="slide" id="slide-25"><span class="eyebrow">Penutup</span><h2>Hebat! Misi Sesi 3 Selesai</h2><div class="visual-grid"><div class="visual-card"><div class="visual-icon">⏸️</div><h4>Wait</h4><p>Berhenti sebentar.</p></div><div class="visual-card"><div class="visual-icon">⏱️</div><h4>Timing</h4><p>Mengatur lama jeda.</p></div><div class="visual-card"><div class="visual-icon">➡️</div><h4>Move</h4><p>Mengatur gerak dan posisi.</p></div><div class="visual-card"><div class="visual-icon">🔍</div><h4>Debug</h4><p>Cek waktu dan posisi secara terpisah.</p></div></div><div class="example-box"><h4>Ingat urutannya</h4><p><strong>Jalan → Wait → Jalan lagi.</strong> Komputer mengikuti blok sesuai urutan yang kamu susun.</p></div></section>
+</div><div class="navigation"><button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)"><span>←</span> Previous</button><div class="slide-indicator"><span id="currentSlide">1</span> / <span id="totalSlides">25</span></div><button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next <span>→</span></button></div></div>
+<div class="explanation-panel">
+<section class="explanation active" id="explanation-1"><h3>Berhenti Dulu, Baru Jalan Lagi</h3><p>Di sesi sebelumnya, kamu sudah belajar menyusun gerakan dalam urutan. Sekarang kita menambah satu ide baru: <strong>jeda</strong>. Kadang karakter tidak perlu terus bergerak. Ia perlu berhenti sebentar, lalu melanjutkan.</p><p>Project hari ini memakai cerita lampu lalu lintas. Mobil Pak Budi akan bergerak mendekati lampu, menunggu, lalu jalan lagi. Di ScratchJr, jeda ini dibuat dengan <strong>Wait Block</strong>.</p><div class="info-box"><h4>Target utama</h4><p>Kamu bisa menjelaskan bahwa Wait membuat sprite berhenti sementara, bukan berhenti selamanya.</p></div></section>
+<section class="explanation" id="explanation-2"><h3>Apa yang Akan Dipelajari?</h3><p>Kita belajar dari kejadian yang dekat dengan kehidupan sehari-hari. Lampu lalu lintas membantu kendaraan tahu kapan berhenti dan kapan jalan. Di coding, kita juga perlu mengatur waktu supaya cerita atau animasi tidak berjalan terlalu cepat.</p><p>Hari ini kamu akan membedakan <strong>Move</strong> dan <strong>Wait</strong>. Move membuat sprite berpindah. Wait membuat sprite diam sementara.</p><div class="info-box"><h4>Urutan belajar</h4><p>Coba simulasi dulu, pahami Wait, lalu baru susun blok di ScratchJr.</p></div></section>
+<section class="explanation" id="explanation-3"><h3>Kenapa Mobil Harus Berhenti?</h3><p>Lampu merah memberi tanda bahwa kendaraan harus berhenti. Kalau semua mobil terus bergerak tanpa aturan, jalan bisa menjadi tidak aman.</p><p>Konsep ini membantu kita memahami Wait. Program yang baik tidak hanya tahu cara bergerak, tetapi juga tahu kapan perlu <strong>menunggu</strong>.</p><div class="example-box"><h4>Hubungkan dengan coding</h4><p>Pak Budi melihat lampu merah → mobil berhenti. Sprite menemukan Wait → sprite berhenti sementara.</p></div></section>
+<section class="explanation" id="explanation-4"><h3>Coba Aturan Lampu</h3><p>Gunakan tombol warna di kiri. Saat merah, mobil tetap berhenti. Saat kuning, mobil bersiap. Saat hijau, mobil boleh bergerak lagi.</p><p>Aktivitas ini dilakukan sebelum ScratchJr supaya kamu sudah punya gambaran tentang perilaku yang ingin dibuat. Nanti blok hanya menjadi cara untuk memberi aturan yang sama kepada sprite.</p><div class="warning-box"><h4>Ingat</h4><p>Di dunia nyata, tetap perhatikan keadaan sekitar dan ikuti aturan lalu lintas bersama orang dewasa.</p></div></section>
+<section class="explanation" id="explanation-5"><h3>Warna sebagai Tanda</h3><p>Merah, kuning, dan hijau memberi tanda yang berbeda. Untuk project kita, bagian paling penting adalah ide <strong>berhenti sementara</strong> saat merah dan <strong>melanjutkan</strong> saat waktunya sudah selesai.</p><p>Karena kita masih belajar dasar, lampu pada project utama boleh menjadi penanda visual saja. Fokus coding ada pada gerakan mobil dan blok Wait.</p></section>
+<section class="explanation" id="explanation-6"><h3>Wait Tidak Sama dengan End</h3><p>Wait membuat program <strong>menunggu</strong>. Setelah waktu tunggu selesai, ScratchJr akan membaca blok berikutnya. Jadi rangkaian masih berjalan.</p><p><strong>End</strong> berbeda. End dipakai untuk mengakhiri rangkaian. Karena itu, posisi Wait dan End tidak boleh tertukar.</p><div class="info-box"><h4>Baca seperti kalimat</h4><p>Jalan → tunggu sebentar → jalan lagi → selesai.</p></div></section>
+<section class="explanation" id="explanation-7"><h3>Timing Membuat Cerita Lebih Rapi</h3><p>Timing berarti mengatur kapan sebuah aksi terjadi dan berapa lama jedanya. Kalau jeda terlalu cepat, kita hampir tidak melihat mobil berhenti. Kalau terlalu lama, cerita terasa lambat.</p><p>Angka Wait bisa diubah saat testing. Kita tidak perlu langsung tahu angka terbaik. Coba, lihat hasilnya, lalu perbaiki.</p><div class="warning-box"><h4>Jangan tertukar</h4><p>Masalah waktu → periksa Wait. Masalah posisi → periksa Move.</p></div></section>
+<section class="explanation" id="explanation-8"><h3>Merasakan Lama Jeda</h3><p>Timer di kiri membantu kamu membandingkan jeda pendek dan jeda yang lebih panjang. Saat angka lebih besar, kamu perlu menunggu lebih lama sebelum selesai.</p><p>Di ScratchJr, kita juga bisa mengubah nilai pada blok Wait untuk melihat perbedaan. Developer sering melakukan percobaan kecil seperti ini untuk mencari timing yang pas.</p></section>
+<section class="explanation" id="explanation-9"><h3>Mengapa Wait Dibutuhkan?</h3><p>Contoh tanpa Wait membuat mobil langsung melewati area lampu. Contoh dengan Wait membuat gerakan terasa seperti ada aturan: mobil datang, berhenti, lalu lanjut.</p><p>Bandingkan hasilnya. Walaupun hanya satu blok yang ditambahkan, cerita menjadi lebih mudah dipahami karena ada waktu untuk melihat aksi berhenti.</p></section>
+<section class="explanation" id="explanation-10"><h3>Aktivitas Gerak Sebelum Coding</h3><p>Permainan merah-kuning-hijau membantu tubuhmu merasakan konsep timing. Saat merah kamu diam, saat kuning kamu bersiap, dan saat hijau kamu bergerak.</p><p>Setelah itu, kita menerjemahkan aturan yang sama menjadi blok. Ini adalah salah satu cara berpikir komputasional: memahami aturan, lalu mengubahnya menjadi langkah-langkah yang jelas.</p></section>
+<section class="explanation" id="explanation-11"><h3>Rencana Sebelum Membuat</h3><p>Project utama membutuhkan jalan, mobil, dan lampu sebagai penanda. Mobil adalah sprite yang menjalankan script utama.</p><p>Kita tidak perlu membuat banyak fitur sekaligus. Target minimum hanya satu alur: <strong>mobil bergerak → Wait → bergerak lagi</strong>.</p><div class="info-box"><h4>Kenapa sederhana?</h4><p>Supaya kamu benar-benar memahami fungsi Wait sebelum menambah fitur lain.</p></div></section>
+<section class="explanation" id="explanation-12"><h3>Lima Bagian Script</h3><p><strong>Green Flag</strong> memulai. <strong>Move Right</strong> membawa mobil mendekati lampu. <strong>Wait</strong> memberi jeda. Move Right kedua membuat mobil melanjutkan perjalanan. <strong>End</strong> menutup rangkaian.</p><p>Kamu tidak perlu menghafal warnanya. Lebih penting memahami fungsi setiap blok.</p></section>
+<section class="explanation" id="explanation-13"><h3>Sequence Masih Penting</h3><p>Wait hanya bekerja sesuai tempatnya di dalam urutan. Kalau Wait dipasang paling awal, mobil akan diam sebelum mulai bergerak. Kalau Wait dipasang setelah End, Wait tidak akan dijalankan.</p><p>Karena itu kita membaca script dari kiri ke kanan: mulai → jalan → tunggu → jalan lagi → selesai.</p></section>
+<section class="explanation" id="explanation-14"><h3>Simulasi Sebelum ScratchJr</h3><p>Tekan tombol Mulai dan perhatikan tiga tahap. Pertama mobil mendekati lampu. Kedua mobil berhenti sebentar. Ketiga mobil melanjutkan perjalanan.</p><p>Kalau kamu bisa menjelaskan tiga tahap ini dengan kata-katamu sendiri, menyusun blok di ScratchJr akan lebih mudah.</p><div class="example-box"><h4>Prediksi dulu</h4><p>Sebelum menekan Mulai, coba tebak di bagian mana mobil akan diam.</p></div></section>
+<section class="explanation" id="explanation-15"><h3>Masuk ke ScratchJr</h3><p>Materi menyediakan dua cara menyiapkan lampu: menggunakan Paint Editor atau memakai starter project dari guru. Ikuti cara yang dipilih kelasmu.</p><p>Starter project membantu kamu fokus pada coding karena background dan sprite sudah tersedia. Jika membuka file dari komputer, lakukan bersama guru atau orang tua.</p><div class="warning-box"><h4>Fokus kita</h4><p>Jangan habiskan waktu menghias sebelum script utama berhasil.</p></div></section>
+<section class="explanation" id="explanation-16"><h3>Checkpoint 1: Mobil Bisa Bergerak</h3><p>Mulai dari dua blok dulu. Green Flag menjadi tanda mulai. Move Right membuat mobil bergerak ke arah lampu.</p><p>Setelah memasang dua blok ini, lakukan testing. Kalau mobil belum bergerak, periksa apakah blok tersambung dan apakah kamu sedang mengedit sprite mobil.</p><div class="info-box"><h4>Testing kecil</h4><p>Tambah sedikit → test → baru lanjut. Cara ini membuat bug lebih mudah ditemukan.</p></div></section>
+<section class="explanation" id="explanation-17"><h3>Checkpoint 2: Tambahkan Jeda</h3><p>Pasang Wait setelah mobil mencapai area dekat lampu. Wait harus berada di tengah alur, karena mobil perlu bergerak dulu sebelum menunggu.</p><p>Nilai Wait dapat diubah saat testing. Modul memberikan contoh nilai, sedangkan lesson plan menekankan bahwa timing bisa disesuaikan sampai jeda terlihat jelas.</p><div class="warning-box"><h4>Kesalahan umum</h4><p>Wait berada di awal atau di akhir sehingga mobil tidak berhenti pada bagian cerita yang diinginkan.</p></div></section>
+<section class="explanation" id="explanation-18"><h3>Checkpoint 3: Mobil Melanjutkan</h3><p>Setelah Wait selesai, ScratchJr perlu menemukan blok gerak berikutnya. Karena itu, tambahkan Move Right lagi setelah Wait.</p><p>End diletakkan paling akhir. Saat rangkaian selesai, mobil sudah melewati lampu dan tidak ada perintah lain yang perlu dilakukan.</p></section>
+<section class="explanation" id="explanation-19"><h3>Membaca Script Lengkap</h3><p>Rangkaian lengkapnya tetap sederhana: <strong>Green Flag → Move Right → Wait → Move Right → End</strong>.</p><p>Modul memberikan contoh angka Move dan Wait. Posisi sprite pada starter project bisa membuat nilai gerak perlu sedikit disesuaikan. Yang harus tetap sama adalah logikanya: mobil datang, berhenti, lalu lanjut.</p><div class="info-box"><h4>Jangan sekadar menyalin</h4><p>Coba tunjuk blok Wait dan jelaskan dengan kata-katamu sendiri apa fungsinya.</p></div></section>
+<section class="explanation" id="explanation-20"><h3>Testing dari Awal</h3><p>Testing bukan hanya melihat “project bisa jalan”. Kita perlu memeriksa apakah hasilnya sesuai rencana.</p><p>Jalankan Green Flag dari awal. Perhatikan posisi mobil saat berhenti, lama jeda, dan apakah mobil bergerak lagi. Ulangi minimal dua kali setelah kamu melakukan perubahan.</p></section>
+<section class="explanation" id="explanation-21"><h3>Debugging dengan Petunjuk</h3><p>Kalau mobil berhenti di tempat yang salah, kemungkinan masalahnya ada pada <strong>Move</strong>. Kalau waktu tunggunya tidak pas, kemungkinan masalahnya ada pada <strong>Wait</strong>.</p><p>Kalau mobil tidak jalan lagi, cek apakah ada blok Move setelah Wait dan apakah semua blok masih tersambung.</p><div class="info-box"><h4>Pola detektif kode</h4><p>Amati → pilih satu bagian → ubah → test lagi.</p></div></section>
+<section class="explanation" id="explanation-22"><h3>Waktu dan Posisi Itu Berbeda</h3><p>Ini adalah checkpoint penting sesi ini. <strong>Move</strong> menjawab pertanyaan “mobil berada di mana?”. <strong>Wait</strong> menjawab pertanyaan “berapa lama mobil menunggu?”.</p><p>Kalau kita salah memilih blok saat memperbaiki, masalahnya bisa tetap ada. Jadi lihat dulu jenis masalahnya: posisi atau waktu.</p></section>
+<section class="explanation" id="explanation-23"><h3>Simpan Versi yang Sudah Diuji</h3><p>Setelah project berhasil, simpan sesuai cara yang digunakan ScratchJr di kelasmu. Pastikan versi yang disimpan adalah versi terakhir setelah debugging.</p><p>Jika guru meminta pengumpulan melalui LMS, ikuti instruksi guru. Jangan mengganti atau menghapus file teman.</p><div class="info-box"><h4>Sebelum selesai</h4><p>Jalankan Green Flag satu kali lagi dan lihat seluruh alur dari awal sampai akhir.</p></div></section>
+<section class="explanation" id="explanation-24"><h3>Challenge Setelah Target Utama Berhasil</h3><p>Challenge hanya dikerjakan setelah alur utama sudah benar. Kamu bisa mengubah nilai Wait untuk membandingkan timing, menambah satu rintangan dan mengubah rute, atau mencoba dua jeda dalam satu rangkaian.</p><p>Saat mencoba bonus, tetap lakukan testing sedikit demi sedikit. Jangan mengubah banyak hal sekaligus karena nanti lebih sulit menemukan penyebab jika project tidak bekerja.</p></section>
+<section class="explanation" id="explanation-25"><h3>Yang Perlu Kamu Ingat</h3><p>Wait membuat sprite berhenti sementara. Setelah Wait selesai, blok berikutnya berjalan. Timing membantu kita membuat jeda yang terasa pas.</p><p>Kamu juga sudah belajar cara memilih blok saat debugging: masalah posisi diperiksa lewat Move, sedangkan masalah waktu diperiksa lewat Wait.</p><div class="example-box"><h4>Kalimat kunci</h4><p><strong>Jalan → tunggu → jalan lagi.</strong></p></div></section>
+</div>
+</div>
+<script>
+const CORRECT_ACCESS_CODE = 'RGMDSLP26';
+const ENABLE_ACCESS_CODE = true;
+let currentSlideIndex = 1;
+let waitInterval = null;
+let compareTimers = [];
+let previewTimers = [];
+const totalSlides = document.querySelectorAll('.slide').length;
+
+function checkAccess(){ if(ENABLE_ACCESS_CODE) showAccessPopup(); else grantAccess(); }
+function showAccessPopup(){ const overlay=document.getElementById('accessPopup'); overlay.style.display='flex'; setTimeout(()=>overlay.querySelector('.access-popup').classList.add('show'),80); setTimeout(()=>document.getElementById('accessInput').focus(),120); }
+function checkAccessCode(){ const input=document.getElementById('accessInput'); const error=document.getElementById('accessError'); if(input.value.trim().toUpperCase()===CORRECT_ACCESS_CODE){grantAccess();}else{error.classList.add('show');input.value='';input.focus();setTimeout(()=>error.classList.remove('show'),2500);} }
+function grantAccess(){document.getElementById('accessPopup').style.display='none';document.getElementById('mainContent').style.display='flex';showSlide(1);}
+function updateProgressBar(){document.getElementById('progressFill').style.width=((currentSlideIndex/totalSlides)*100)+'%';}
+function showSlide(index){document.querySelectorAll('.slide').forEach(el=>el.classList.remove('active'));document.querySelectorAll('.explanation').forEach(el=>el.classList.remove('active'));document.getElementById(`slide-${index}`)?.classList.add('active');document.getElementById(`explanation-${index}`)?.classList.add('active');document.querySelector('.slide-content').scrollTop=0;document.querySelector('.explanation-panel').scrollTop=0;document.getElementById('currentSlide').textContent=index;document.getElementById('totalSlides').textContent=totalSlides;document.getElementById('prevBtn').disabled=index===1;document.getElementById('nextBtn').disabled=index===totalSlides;updateProgressBar();}
+function changeSlide(direction){currentSlideIndex=Math.min(totalSlides,Math.max(1,currentSlideIndex+direction));showSlide(currentSlideIndex);}
+document.addEventListener('keydown',e=>{const accessVisible=document.getElementById('accessPopup').style.display!=='none';if(accessVisible){if(e.key==='Enter')checkAccessCode();return;}const tag=document.activeElement?.tagName;if(tag==='INPUT'||tag==='TEXTAREA')return;if(e.key==='ArrowRight')changeSlide(1);if(e.key==='ArrowLeft')changeSlide(-1);});
+document.getElementById('accessInput').addEventListener('input',e=>{const start=e.target.selectionStart;e.target.value=e.target.value.toUpperCase();e.target.setSelectionRange(start,start);});
+function deviceCheck(button){button.classList.toggle('correct');}
+function quizChoice(button,correct,feedbackId,message){button.parentElement.querySelectorAll('.choice-btn').forEach(b=>b.classList.remove('correct','wrong'));button.classList.add(correct?'correct':'wrong');const fb=document.getElementById(feedbackId);if(fb){fb.textContent=message;fb.style.color=correct?'var(--green)':'var(--red)';}}
+
+function setTraffic(color){['red','yellow','green'].forEach(c=>document.getElementById('lamp'+c[0].toUpperCase()+c.slice(1)).classList.toggle('active',c===color));const car=document.getElementById('trafficCar');car.classList.remove('past-light');car.classList.add('at-light');const label=document.getElementById('trafficPlayLabel');const fb=document.getElementById('trafficFeedback');if(color==='red'){label.textContent='Lampu merah: STOP';fb.textContent='Mobil berhenti dan menunggu.';}if(color==='yellow'){label.textContent='Lampu kuning: SIAP';fb.textContent='Mobil bersiap. Belum melaju kencang.';}if(color==='green'){label.textContent='Lampu hijau: JALAN';fb.textContent='Mobil boleh jalan lagi.';setTimeout(()=>{car.classList.remove('at-light');car.classList.add('past-light');},80);}}
+function resetTraffic(){const car=document.getElementById('trafficCar');car.classList.remove('past-light');car.classList.add('at-light');setTraffic('red');}
+
+function runTimer(n){if(waitInterval)clearInterval(waitInterval);const el=document.getElementById('waitTimer');const fb=document.getElementById('timerFeedback');let left=n;el.textContent=left;fb.textContent='Sedang menunggu...';waitInterval=setInterval(()=>{left--;if(left<=0){clearInterval(waitInterval);waitInterval=null;el.textContent='GO!';fb.textContent='Wait selesai. Sekarang blok berikutnya boleh berjalan.';}else{el.textContent=left;}},700);}
+
+function clearCompareTimers(){compareTimers.forEach(clearTimeout);compareTimers=[];}
+function runCompare(withWait){clearCompareTimers();const car=document.getElementById(withWait?'carWithWait':'carNoWait');car.classList.remove('run','stop');void car.offsetWidth;if(!withWait){car.classList.add('run');document.getElementById('noWaitText').textContent='Mobil langsung lewat tanpa jeda.';}else{car.classList.add('stop');document.getElementById('withWaitText').textContent='Mobil berhenti sebentar...';compareTimers.push(setTimeout(()=>{car.classList.remove('stop');car.classList.add('run');document.getElementById('withWaitText').textContent='Wait selesai. Mobil jalan lagi.';},1500));}}
+
+const roleplay=[['🔴','DIAM!'],['🟡','BERSIAP!'],['🟢','JALAN DI TEMPAT!']];let roleIndex=-1;
+function nextRoleplay(){roleIndex=(roleIndex+1)%roleplay.length;document.getElementById('roleplayLight').textContent=roleplay[roleIndex][0];document.getElementById('roleplayAction').textContent=roleplay[roleIndex][1];}
+function pickCodeOrder(button,order){button.parentElement.querySelectorAll('.sequence-card').forEach(b=>b.classList.remove('correct','wrong'));button.classList.add(order===1?'correct':'wrong');document.getElementById('codeOrderFeedback').textContent=order===1?'Betul. Green Flag menjadi tanda mulai.':'Coba lagi. Project harus mulai dulu sebelum menjalankan aksi.';}
+
+function clearPreviewTimers(){previewTimers.forEach(clearTimeout);previewTimers=[];}
+function resetProjectPreview(){clearPreviewTimers();const car=document.getElementById('projectCar');car.classList.remove('p1','p2');document.getElementById('projectStatus').textContent='Siap memulai.';}
+function runProjectPreview(){resetProjectPreview();const car=document.getElementById('projectCar');const st=document.getElementById('projectStatus');st.textContent='1. Move Right: mobil menuju lampu.';car.classList.add('p1');previewTimers.push(setTimeout(()=>{st.textContent='2. Wait: mobil berhenti sebentar.';},900));previewTimers.push(setTimeout(()=>{st.textContent='3. Wait selesai. Mobil jalan lagi.';car.classList.add('p2');},2300));previewTimers.push(setTimeout(()=>{st.textContent='4. Selesai! Jalan → Wait → Jalan lagi.';},3200));}
+
+function toggleCheck(input){input.closest('.check-item').classList.toggle('done',input.checked);const all=[...document.querySelectorAll('#slide-20 .check-item input')];const done=all.filter(x=>x.checked).length;document.getElementById('testChecklistFeedback').textContent=done===all.length?'Semua checkpoint sudah diuji. Bagus!':`${done} dari ${all.length} checkpoint sudah dicek.`;}
+function showDebug(n,button){document.querySelectorAll('#slide-21 .debug-tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('#slide-21 .debug-scenario').forEach(s=>s.classList.remove('active'));button.classList.add('active');document.getElementById(`debug-${n}`).classList.add('active');document.getElementById('debugFeedback').textContent='Pilih cara perbaikan yang paling pas.';}
+function debugChoice(button,correct,message){button.parentElement.querySelectorAll('.choice-btn').forEach(b=>b.classList.remove('correct','wrong'));button.classList.add(correct?'correct':'wrong');const fb=document.getElementById('debugFeedback');fb.textContent=message;fb.style.color=correct?'var(--green)':'var(--red)';}
+function problemChoice(button,type){document.querySelectorAll('.problem-card').forEach(b=>b.classList.remove('selected'));button.classList.add('selected');document.getElementById('problemFeedback').textContent=type==='move'?'Ini masalah posisi/jarak. Cek blok Move.':'Ini masalah waktu/jeda. Cek blok Wait.';}
+
+document.addEventListener('DOMContentLoaded',()=>{checkAccess();});
+</script>
+</body></html>
