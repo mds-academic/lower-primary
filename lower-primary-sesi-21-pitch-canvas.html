@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pitch Canvas Final Project - Sesi 21</title>
+  <style>
+    :root{
+      --blue:#1769c2;
+      --blue2:#eaf4ff;
+      --yellow:#fff4bf;
+      --orange:#ffb347;
+      --green:#dff7e5;
+      --green2:#2f9e58;
+      --purple:#efe6ff;
+      --purple2:#7a4dd8;
+      --red:#ffe4e4;
+      --text:#243447;
+      --muted:#617286;
+      --line:#d9e2ec;
+      --bg:#f5f9fd;
+      --white:#ffffff;
+      --shadow:0 8px 24px rgba(30,70,110,.10);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:var(--bg);
+      line-height:1.5;
+    }
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:10;
+      background:#fff;
+      border-bottom:1px solid var(--line);
+      padding:12px 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      box-shadow:0 2px 8px rgba(0,0,0,.04);
+    }
+    .brand strong{display:block;font-size:1rem}
+    .brand span{font-size:.86rem;color:var(--muted)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    button{
+      border:0;
+      border-radius:10px;
+      padding:10px 14px;
+      font-size:.92rem;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .btn-primary{background:var(--blue);color:#fff}
+    .btn-soft{background:#eef4fa;color:var(--text)}
+    .btn-danger{background:#fff0f0;color:#b42318}
+    .page{
+      max-width:980px;
+      margin:24px auto 60px;
+      padding:0 18px;
+    }
+    .hero{
+      background:linear-gradient(135deg,#1769c2,#5c8fe8);
+      color:#fff;
+      border-radius:24px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+    .hero .eyebrow{
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-size:.8rem;
+      font-weight:800;
+      opacity:.9;
+    }
+    .hero h1{margin:8px 0 8px;font-size:2rem;line-height:1.15}
+    .hero p{margin:0;max-width:760px;font-size:1.02rem}
+    .note{
+      background:var(--yellow);
+      border:2px solid #efd86a;
+      border-radius:16px;
+      padding:14px 16px;
+      margin:16px 0;
+    }
+    .card{
+      background:var(--white);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:20px;
+      box-shadow:var(--shadow);
+      margin:16px 0;
+      break-inside:avoid;
+    }
+    .card h2{
+      margin:0 0 6px;
+      color:var(--blue);
+      font-size:1.28rem;
+    }
+    .card .helper{
+      margin:0 0 14px;
+      color:var(--muted);
+      font-size:.93rem;
+    }
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    label{
+      display:block;
+      font-size:.9rem;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+    input[type="text"], textarea, select{
+      width:100%;
+      border:2px solid #dbe7f2;
+      border-radius:12px;
+      padding:12px 13px;
+      font-size:1rem;
+      color:var(--text);
+      background:#fff;
+      outline:none;
+      transition:.15s;
+    }
+    input[type="text"]:focus, textarea:focus, select:focus{
+      border-color:#69a9eb;
+      box-shadow:0 0 0 3px rgba(23,105,194,.10);
+    }
+    textarea{min-height:92px;resize:vertical}
+    .theme-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+    .theme-option{
+      border:2px solid #dbe7f2;
+      border-radius:14px;
+      padding:11px 12px;
+      display:flex;
+      align-items:flex-start;
+      gap:9px;
+      cursor:pointer;
+      background:#fff;
+    }
+    .theme-option:has(input:checked){
+      border-color:#69a9eb;
+      background:var(--blue2);
+    }
+    .theme-option input{margin-top:4px}
+    .theme-option span{font-size:.94rem}
+    .pill{
+      display:inline-block;
+      background:var(--blue2);
+      color:var(--blue);
+      border-radius:999px;
+      padding:4px 9px;
+      font-size:.78rem;
+      font-weight:800;
+      margin-bottom:8px;
+    }
+    .question-card{
+      border:2px solid #e5eaf0;
+      border-radius:16px;
+      padding:14px;
+      background:#fcfdff;
+    }
+    .question-card strong{display:block;margin-bottom:6px}
+    .choice-box{
+      background:var(--purple);
+      border:2px solid #d7c3ff;
+      border-radius:16px;
+      padding:14px;
+    }
+    .choice-box h3{margin:0 0 10px;color:var(--purple2);font-size:1rem}
+    .choice-box label{
+      font-weight:500;
+      display:flex;
+      gap:8px;
+      align-items:flex-start;
+      margin:7px 0;
+    }
+    .scope{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+    .scope label{
+      background:var(--green);
+      border:2px solid #b9e9c7;
+      border-radius:14px;
+      padding:11px;
+      font-weight:600;
+      display:flex;
+      gap:9px;
+      align-items:flex-start;
+    }
+    .draw-wrap{
+      background:#fff;
+      border:2px dashed #9fb5ca;
+      border-radius:16px;
+      overflow:hidden;
+    }
+    canvas{
+      width:100%;
+      height:360px;
+      display:block;
+      touch-action:none;
+      background:#fff;
+      cursor:crosshair;
+    }
+    .draw-tools{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      padding:10px;
+      border-top:1px solid var(--line);
+      background:#f8fbfe;
+    }
+    .draw-tools button{padding:8px 11px;font-size:.86rem}
+    .block-grid{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:8px;
+    }
+    .block-chip{
+      border:2px solid #d8e2ec;
+      border-radius:14px;
+      padding:10px 8px;
+      text-align:center;
+      background:#fff;
+      font-size:.88rem;
+    }
+    .block-chip:has(input:checked){
+      background:#eef7ff;
+      border-color:#64a8e8;
+    }
+    .block-chip input{display:block;margin:0 auto 6px}
+    .summary{
+      background:#f8fbff;
+      border:2px solid #cfe2f5;
+      border-radius:18px;
+      padding:16px;
+    }
+    .summary h3{margin:0 0 10px;color:var(--blue)}
+    .summary-row{margin:7px 0}
+    .summary-row b{color:#0e4e91}
+    .progressbox{
+      height:10px;
+      border-radius:999px;
+      background:#e7eef5;
+      overflow:hidden;
+      margin-top:10px;
+    }
+    .progressbar{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,#50b36b,#2a8fd5);
+      transition:.2s;
+    }
+    .footer-tip{
+      text-align:center;
+      color:var(--muted);
+      font-size:.85rem;
+      margin-top:16px;
+    }
+    @media(max-width:760px){
+      .grid2,.grid3,.theme-grid,.scope{grid-template-columns:1fr}
+      .block-grid{grid-template-columns:repeat(2,1fr)}
+      .topbar{align-items:flex-start;flex-direction:column}
+      .hero h1{font-size:1.65rem}
+    }
+    @media print{
+      body{background:#fff}
+      .topbar,.draw-tools,.footer-tip,.no-print{display:none!important}
+      .page{max-width:none;margin:0;padding:0}
+      .hero{box-shadow:none;border-radius:12px;margin:0 0 12px;padding:20px}
+      .card{box-shadow:none;border:1px solid #bbb;margin:10px 0;padding:14px}
+      input[type="text"], textarea{
+        border:1px solid #bbb!important;
+        background:#fff!important;
+        color:#000!important;
+      }
+      .theme-option,.choice-box,.scope label,.block-chip{break-inside:avoid}
+      canvas{height:260px;border:1px solid #bbb}
+      @page{size:A4;margin:12mm}
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar no-print">
+    <div class="brand">
+      <strong>UOB My Digital Space - Lower Primary</strong>
+      <span>Sesi 21 • Pitch Canvas Final Project</span>
+    </div>
+    <div class="actions">
+      <button class="btn-soft" onclick="saveLocal()">Simpan</button>
+      <button class="btn-primary" onclick="downloadPDF()">Simpan sebagai PDF</button>
+      <button class="btn-danger" onclick="resetForm()">Hapus Isian</button>
+    </div>
+  </div>
+
+  <main class="page" id="canvasPage">
+    <section class="hero">
+      <div class="eyebrow">Final Project • Sesi 21</div>
+      <h1>Pitch Canvas Project-ku</h1>
+      <p>Yuk, rancang project-mu dulu sebelum mulai coding. Isi dengan kalimat pendek. Tidak perlu sempurna—yang penting idenya jelas dan bisa dibuat.</p>
+    </section>
+
+    <div class="note">
+      <strong>Ingat!</strong> Project yang bagus tidak harus besar. Lebih baik idenya sederhana, jelas, dan bisa selesai dibuat.
+    </div>
+
+    <section class="card">
+      <h2>1. Tentang Aku dan Project-ku</h2>
+      <p class="helper">Gunakan nama panggilan. Jangan tulis data pribadi seperti alamat rumah atau password.</p>
+      <div class="grid2">
+        <div>
+          <label>Nama panggilan</label>
+          <input id="nama" type="text" placeholder="Contoh: Rara" />
+        </div>
+        <div>
+          <label>Judul project</label>
+          <input id="judul" type="text" placeholder="Contoh: Celengan Pintar" />
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. Pilih Tema</h2>
+      <p class="helper">Pilih satu tema yang paling kamu suka. Kalau punya ide sendiri, pilih "Ideku sendiri".</p>
+      <div class="theme-grid">
+        <label class="theme-option"><input type="radio" name="tema" value="Celengan Ajaib"><span>Celengan Ajaib</span></label>
+        <label class="theme-option"><input type="radio" name="tema" value="Kebutuhan atau Keinginan"><span>Pilih Kebutuhan atau Keinginan</span></label>
+        <label class="theme-option"><input type="radio" name="tema" value="Kasir Mini"><span>Kasir Mini</span></label>
+        <label class="theme-option"><input type="radio" name="tema" value="Berbagi Koin"><span>Berbagi Koin</span></label>
+        <label class="theme-option"><input type="radio" name="tema" value="Jalan Aman di Dunia Digital"><span>Jalan Aman di Dunia Digital</span></label>
+        <label class="theme-option"><input type="radio" name="tema" value="Robot Penabung"><span>Robot Penabung</span></label>
+        <label class="theme-option"><input type="radio" name="tema" value="Nabung atau Jajan"><span>Buku Cerita: Nabung atau Jajan</span></label>
+        <label class="theme-option"><input type="radio" name="tema" value="Ideku sendiri"><span>Ideku sendiri</span></label>
+      </div>
+      <div style="margin-top:12px">
+        <label>Kalau memilih "Ideku sendiri", tulis temanya di sini</label>
+        <input id="temaLain" type="text" placeholder="Tema project-ku..." />
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>3. Siapa Karakter Utamanya?</h2>
+      <p class="helper">Pilih karakter yang paling penting dalam project-mu.</p>
+      <div class="grid2">
+        <div>
+          <label>Nama karakter utama</label>
+          <input id="karakter" type="text" placeholder="Contoh: Kiko" />
+        </div>
+        <div>
+          <label>Karakter ini ingin...</label>
+          <input id="tujuanKarakter" type="text" placeholder="Contoh: membeli buku" />
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>4. Masalah dan Solusi</h2>
+      <p class="helper">Masalah dan solusi harus nyambung, ya.</p>
+      <div class="grid2">
+        <div class="question-card">
+          <span class="pill">Masalah</span>
+          <strong>Apa masalah yang dialami karakter?</strong>
+          <textarea id="masalah" placeholder="Contoh: Uang Kiko belum cukup untuk membeli buku."></textarea>
+        </div>
+        <div class="question-card">
+          <span class="pill">Solusi</span>
+          <strong>Apa yang bisa dilakukan untuk membantu?</strong>
+          <textarea id="solusi" placeholder="Contoh: Kiko mengumpulkan koin dan menabung."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>5. Apa yang Bisa Dilakukan Pemain?</h2>
+      <p class="helper">Pilih satu atau dua aksi sederhana. Tidak perlu terlalu banyak.</p>
+      <div class="choice-box">
+        <h3>Ide aksi atau pilihan</h3>
+        <label><input type="checkbox" class="aksi" value="Menekan atau menyentuh sprite"> Menekan atau menyentuh sprite</label>
+        <label><input type="checkbox" class="aksi" value="Memilih salah satu pilihan"> Memilih salah satu pilihan</label>
+        <label><input type="checkbox" class="aksi" value="Menggerakkan karakter"> Menggerakkan karakter</label>
+        <label><input type="checkbox" class="aksi" value="Mengumpulkan sesuatu"> Mengumpulkan sesuatu</label>
+        <label><input type="checkbox" class="aksi" value="Berpindah halaman"> Berpindah halaman</label>
+      </div>
+      <div style="margin-top:12px">
+        <label>Aksi lain kalau ada</label>
+        <input id="aksiLain" type="text" placeholder="Contoh: karakter memilih barang yang dibutuhkan" />
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>6. Pesan Baik dari Project-ku</h2>
+      <p class="helper">Apa yang ingin kamu ingatkan kepada pemain?</p>
+      <textarea id="pesan" placeholder="Contoh: Menabung sedikit demi sedikit bisa membantu kita mencapai tujuan."></textarea>
+    </section>
+
+    <section class="card">
+      <h2>7. Gambar Halaman Awal</h2>
+      <p class="helper">Gambar tempat cerita dan posisi karakter utama. Tidak perlu bagus—cukup supaya kamu tahu apa yang akan dibuat di CodeJR.</p>
+      <div class="draw-wrap">
+        <canvas id="sketch"></canvas>
+        <div class="draw-tools no-print">
+          <button class="btn-soft" onclick="setPen('#243447',3)">Pensil</button>
+          <button class="btn-soft" onclick="setPen('#1769c2',5)">Biru</button>
+          <button class="btn-soft" onclick="setPen('#d9485f',5)">Merah</button>
+          <button class="btn-soft" onclick="setPen('#ffffff',16)">Penghapus</button>
+          <button class="btn-danger" onclick="clearCanvas()">Hapus Gambar</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>8. Block Apa yang Mungkin Kupakai?</h2>
+      <p class="helper">Belum perlu membuat script lengkap. Cukup pilih block yang kira-kira akan dibutuhkan.</p>
+      <div class="block-grid">
+        <label class="block-chip"><input type="checkbox" class="block" value="Move">Move</label>
+        <label class="block-chip"><input type="checkbox" class="block" value="Start on Tap">Start on Tap</label>
+        <label class="block-chip"><input type="checkbox" class="block" value="Message">Message</label>
+        <label class="block-chip"><input type="checkbox" class="block" value="Repeat">Repeat</label>
+        <label class="block-chip"><input type="checkbox" class="block" value="Go to Page">Go to Page</label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>9. Cek: Project-ku Tidak Terlalu Besar</h2>
+      <p class="helper">Centang kalau sudah sesuai.</p>
+      <div class="scope">
+        <label><input type="checkbox" class="cek"> Maksimal 3 karakter utama</label>
+        <label><input type="checkbox" class="cek"> Sekitar 3–4 halaman atau kurang</label>
+        <label><input type="checkbox" class="cek"> Hanya 1 masalah utama</label>
+        <label><input type="checkbox" class="cek"> Ada 1 solusi utama</label>
+        <label><input type="checkbox" class="cek"> Ada minimal 1 interaksi</label>
+        <label><input type="checkbox" class="cek"> Ada 1 pesan baik</label>
+      </div>
+      <div class="progressbox"><div class="progressbar" id="progressbar"></div></div>
+      <p id="progressText" class="helper" style="margin-top:8px">0 dari 6 checklist selesai.</p>
+    </section>
+
+    <section class="card">
+      <h2>10. Ceritakan Ide Project-mu dalam 3 Kalimat</h2>
+      <p class="helper">Ini bisa membantu saat nanti kamu latihan pitching.</p>
+      <textarea id="pitch" placeholder="Contoh:
+Project-ku bernama ...
+Masalahnya adalah ...
+Pemain akan ... supaya ..."></textarea>
+    </section>
+
+    <section class="card">
+      <h2>Ringkasan Pitch Canvas</h2>
+      <p class="helper">Cek sekali lagi sebelum disimpan menjadi PDF.</p>
+      <div class="summary" id="summary">
+        <h3>Project-ku</h3>
+        <div class="summary-row"><b>Nama:</b> <span data-summary="nama">-</span></div>
+        <div class="summary-row"><b>Judul:</b> <span data-summary="judul">-</span></div>
+        <div class="summary-row"><b>Tema:</b> <span data-summary="tema">-</span></div>
+        <div class="summary-row"><b>Karakter:</b> <span data-summary="karakter">-</span></div>
+        <div class="summary-row"><b>Masalah:</b> <span data-summary="masalah">-</span></div>
+        <div class="summary-row"><b>Solusi:</b> <span data-summary="solusi">-</span></div>
+        <div class="summary-row"><b>Aksi:</b> <span data-summary="aksi">-</span></div>
+        <div class="summary-row"><b>Pesan baik:</b> <span data-summary="pesan">-</span></div>
+      </div>
+    </section>
+
+    <p class="footer-tip">Saat menekan "Simpan sebagai PDF", pilih <strong>Save as PDF / Simpan sebagai PDF</strong> pada jendela print browser.</p>
+  </main>
+
+  <script>
+    const ids = ['nama','judul','temaLain','karakter','tujuanKarakter','masalah','solusi','aksiLain','pesan','pitch'];
+    const canvas = document.getElementById('sketch');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    let penColor = '#243447';
+    let penWidth = 3;
+
+    function resizeCanvas(){
+      const rect = canvas.getBoundingClientRect();
+      const old = document.createElement('canvas');
+      old.width = canvas.width || 1;
+      old.height = canvas.height || 1;
+      old.getContext('2d').drawImage(canvas,0,0);
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width*dpr;
+      canvas.height = 360*dpr;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      ctx.fillStyle='#fff';
+      ctx.fillRect(0,0,rect.width,360);
+      if(old.width>1) ctx.drawImage(old,0,0,old.width,old.height,0,0,rect.width,360);
+      ctx.lineCap='round';
+      ctx.lineJoin='round';
+    }
+    setTimeout(resizeCanvas,100);
+
+    function point(e){
+      const r=canvas.getBoundingClientRect();
+      const p=e.touches ? e.touches[0] : e;
+      return {x:p.clientX-r.left,y:p.clientY-r.top};
+    }
+    function startDraw(e){drawing=true; const p=point(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); e.preventDefault();}
+    function draw(e){
+      if(!drawing)return;
+      const p=point(e);
+      ctx.strokeStyle=penColor;ctx.lineWidth=penWidth;
+      ctx.lineTo(p.x,p.y);ctx.stroke();e.preventDefault();
+    }
+    function stopDraw(){drawing=false; saveLocal();}
+    canvas.addEventListener('mousedown',startDraw);
+    canvas.addEventListener('mousemove',draw);
+    window.addEventListener('mouseup',stopDraw);
+    canvas.addEventListener('touchstart',startDraw,{passive:false});
+    canvas.addEventListener('touchmove',draw,{passive:false});
+    canvas.addEventListener('touchend',stopDraw);
+
+    function setPen(color,width){penColor=color;penWidth=width;}
+    function clearCanvas(){
+      const r=canvas.getBoundingClientRect();
+      ctx.fillStyle='#fff';ctx.fillRect(0,0,r.width,360);
+      saveLocal();
+    }
+
+    function selectedTheme(){
+      const r=document.querySelector('input[name="tema"]:checked');
+      if(!r) return '';
+      return r.value==='Ideku sendiri' ? (document.getElementById('temaLain').value || 'Ideku sendiri') : r.value;
+    }
+    function checkedValues(selector){
+      return [...document.querySelectorAll(selector+':checked')].map(x=>x.value);
+    }
+    function value(id){return (document.getElementById(id)?.value||'').trim();}
+
+    function updateSummary(){
+      const map={
+        nama:value('nama'),
+        judul:value('judul'),
+        tema:selectedTheme(),
+        karakter:value('karakter'),
+        masalah:value('masalah'),
+        solusi:value('solusi'),
+        aksi:[...checkedValues('.aksi'), value('aksiLain')].filter(Boolean).join(', '),
+        pesan:value('pesan')
+      };
+      Object.entries(map).forEach(([k,v])=>{
+        const el=document.querySelector('[data-summary="'+k+'"]');
+        if(el) el.textContent=v||'-';
+      });
+      const checks=document.querySelectorAll('.cek');
+      const done=[...checks].filter(x=>x.checked).length;
+      document.getElementById('progressbar').style.width=(done/checks.length*100)+'%';
+      document.getElementById('progressText').textContent=done+' dari '+checks.length+' checklist selesai.';
+    }
+
+    function getState(){
+      return {
+        fields:Object.fromEntries(ids.map(id=>[id,value(id)])),
+        tema:document.querySelector('input[name="tema"]:checked')?.value||'',
+        aksi:checkedValues('.aksi'),
+        blocks:checkedValues('.block'),
+        cek:[...document.querySelectorAll('.cek')].map(x=>x.checked),
+        canvas:canvas.toDataURL('image/png')
+      };
+    }
+
+    function saveLocal(){
+      try{
+        localStorage.setItem('uob_lp_s21_pitch_canvas',JSON.stringify(getState()));
+      }catch(e){}
+      updateSummary();
+    }
+
+    function loadLocal(){
+      try{
+        const raw=localStorage.getItem('uob_lp_s21_pitch_canvas');
+        if(!raw) return;
+        const s=JSON.parse(raw);
+        Object.entries(s.fields||{}).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.value=v;});
+        if(s.tema){
+          const el=document.querySelector('input[name="tema"][value="'+CSS.escape(s.tema)+'"]'); if(el)el.checked=true;
+        }
+        (s.aksi||[]).forEach(v=>{const el=[...document.querySelectorAll('.aksi')].find(x=>x.value===v);if(el)el.checked=true;});
+        (s.blocks||[]).forEach(v=>{const el=[...document.querySelectorAll('.block')].find(x=>x.value===v);if(el)el.checked=true;});
+        [...document.querySelectorAll('.cek')].forEach((el,i)=>el.checked=!!(s.cek||[])[i]);
+        if(s.canvas){
+          const im=new Image(); im.onload=()=>{const r=canvas.getBoundingClientRect();ctx.drawImage(im,0,0,r.width,360);}; im.src=s.canvas;
+        }
+      }catch(e){}
+      updateSummary();
+    }
+
+    function downloadPDF(){
+      updateSummary();
+      saveLocal();
+      window.print();
+    }
+
+    function resetForm(){
+      if(!confirm('Hapus semua isian Pitch Canvas?')) return;
+      ids.forEach(id=>document.getElementById(id).value='');
+      document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);
+      localStorage.removeItem('uob_lp_s21_pitch_canvas');
+      clearCanvas(); updateSummary();
+    }
+
+    document.querySelectorAll('input,textarea').forEach(el=>{
+      el.addEventListener('input',()=>{updateSummary();saveLocal();});
+      el.addEventListener('change',()=>{updateSummary();saveLocal();});
+    });
+    window.addEventListener('beforeprint',updateSummary);
+    window.addEventListener('load',()=>{loadLocal();updateSummary();});
+  </script>
+</body>
+</html>
