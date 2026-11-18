@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robot AI Sahabat | Detektif Bug V2 · Sesi 25</title>
+<style>
+:root{--red:#e60012;--blue:#0056b3;--light:#eef7ff;--ink:#233047;--muted:#66758a;--line:#dce5ee;--good:#15803d;--bad:#af3029;--purple:#713ca5;--bg:#f3f6fb}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--bg)}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:wait}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #84b6fd;outline-offset:2px}
+.topbar{height:7px;background:linear-gradient(90deg,var(--red),#fb6c5b 35%,var(--blue) 70%,#71b9f5)}.wrap{max-width:1200px;margin:auto;padding:26px 23px 46px}.topline{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;font-size:.85rem;font-weight:750;color:var(--blue)}.chip{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #c8d9e9;border-radius:999px;padding:7px 12px}.hero{display:flex;gap:22px;justify-content:space-between;align-items:flex-end;margin:20px 0 25px}.hero h1{font-size:clamp(1.75rem,4vw,3rem);line-height:1.12;margin:4px 0 10px;color:var(--blue);letter-spacing:-.035em}.hero p{color:var(--muted);line-height:1.65;max-width:740px;margin:0;font-size:1.04rem}.hero-robot{background:white;border:2px solid var(--line);box-shadow:0 5px 20px #d8e4f6;border-radius:25px;padding:16px;font-size:3.7rem;transform:rotate(4deg)}
+.layout{display:grid;grid-template-columns:1.18fr .82fr;gap:18px;align-items:start}.col{display:grid;gap:18px}.card{background:#fff;border:1.5px solid var(--line);border-radius:18px;box-shadow:0 4px 18px rgba(20,48,89,.045);overflow:hidden}.card>.inside{padding:20px}.card-head{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:17px 20px;background:#fbfcff;border-bottom:1px solid var(--line)}h2{font-size:1.1rem;margin:0;color:var(--blue)}h3{font-size:1rem;margin:0 0 8px;color:var(--ink)}.small{font-size:.84rem;line-height:1.5;color:var(--muted)}.small strong{color:var(--ink)}.pill{display:inline-block;border-radius:999px;font-weight:750;padding:5px 9px;background:#f1e7fc;color:var(--purple);font-size:.75rem}
+.goal{display:flex;align-items:start;gap:11px;background:var(--light);padding:13px 15px;border-radius:12px;font-size:.92rem;line-height:1.5;margin-bottom:17px}.goal strong{color:var(--blue)}
+.block-list{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:13px 11px;background:#f7f9fe;border:1px solid #dce7f1;border-radius:14px;margin:8px 0 15px;min-height:80px}.codeblock{display:inline-flex;align-items:center;gap:7px;color:#fff;padding:11px 12px;border-radius:12px;font-weight:800;font-size:.9rem;box-shadow:inset 0 -3px rgba(0,0,0,.10);white-space:nowrap}.start{background:#e0a100;color:#302307}.move{background:#3b81cb}.hop{background:#3b81cb}.end{background:#e44a63}.missing{color:#b12f47;background:#fff2f4;border:2px dashed #e17b85;box-shadow:none}.tiny-arrow{font-weight:900;color:#718096}.controls{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:10px}.field{display:flex;flex-direction:column;gap:5px;font-size:.83rem;font-weight:700;color:#46576a}.field select,.field input{width:100%;border:1.5px solid #cad7e5;border-radius:9px;padding:9px 8px;background:#fff;color:var(--ink)}.toggles{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:13px;font-size:.84rem;font-weight:650}.toggles label{display:inline-flex;align-items:center;gap:7px;cursor:pointer}.toggles input{accent-color:var(--blue);width:17px;height:17px}.btns{display:flex;flex-wrap:wrap;gap:9px;margin-top:17px}.btn{border:1.5px solid transparent;padding:11px 15px;border-radius:10px;font-weight:800;transition:transform .15s,background .15s}.btn:hover:not(:disabled){transform:translateY(-1px)}.btn-primary{background:var(--blue);color:white}.btn-red{background:var(--red);color:white}.btn-ghost{background:#f5f8fc;border-color:#d7e1ed;color:#344962}.btn-purple{background:#703eab;color:#fff}
+.stage{position:relative;min-height:230px;border:2px solid #b9d8ef;border-radius:14px;overflow:hidden;background:linear-gradient(#c8ebfd 0%,#eaf6fd 67%,#d6f0c8 67%,#a8d99f 100%);margin:5px 0 12px}.stage:after{content:"";position:absolute;left:0;right:0;bottom:25%;border-bottom:2px dashed #ffffffb8}.stage-label{position:absolute;top:11px;left:11px;z-index:4;background:#ffffffcf;border-radius:999px;padding:6px 10px;font-size:.77rem;font-weight:800;color:#4d6882}.shelf{position:absolute;right:6%;bottom:24%;font-size:4.2rem;z-index:1;filter:drop-shadow(1px 3px 0 #94ac92)}.obstacle{position:absolute;left:61%;bottom:18%;font-size:2.35rem;z-index:2}.panda{position:absolute;left:13%;bottom:25%;font-size:3.6rem;z-index:3;transform:translate(-50%,0);will-change:left,transform;transition:left .24s ease;filter:drop-shadow(0 4px 3px rgba(0,0,0,.1))}.panda.jumping{animation:bounce .37s ease}.target-arrow{position:absolute;left:61%;bottom:55%;font-size:.83rem;font-weight:850;color:#004b87;z-index:2}.track{margin-top:9px;font-size:.86rem;line-height:1.5;color:#4e6075}.track b{color:var(--blue)}@keyframes bounce{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,-65px)}}
+.message{border-radius:12px;background:#f5f8fc;border:1px solid #dce4ef;padding:12px 13px;font-size:.92rem;line-height:1.6;min-height:65px}.message.good{background:#edf9f0;border-color:#96d4a8}.message.bad{background:#fff3f1;border-color:#f1b3ac}.message strong{color:var(--ink)}
+.robot{display:flex;gap:12px;align-items:flex-start;padding:13px;border-radius:13px;background:#f7f1ff;border:1px solid #e4d4fa;margin:10px 0}.robot-face{flex:0 0 45px;display:grid;place-items:center;font-size:2rem;width:45px;height:45px;background:#fff;border-radius:12px}.robot p{margin:0;font-size:.91rem;line-height:1.55}.ai-label{font-size:.76rem;font-weight:800;color:#7746a6;margin-bottom:5px!important}.advice{border:1.5px solid #dfc9f4;border-radius:12px;padding:14px;margin-top:11px;line-height:1.55;background:white}.advice .rowlabel{color:var(--purple);font-weight:800;font-size:.85rem;margin-bottom:5px}.advice code{font-family:inherit;font-size:.92rem;font-weight:800;color:#334a67}.hidden{display:none!important}.log{display:grid;gap:10px}.log-item{padding:12px;border:1px solid var(--line);border-radius:11px;background:#fbfdff;font-size:.87rem;line-height:1.55}.log-item b{display:block;margin-bottom:4px}.reflection-btn{width:100%;text-align:left;padding:12px;border:1.5px solid #d8e3ed;border-radius:10px;background:#fff;font-size:.9rem;font-weight:650;margin:5px 0}.reflection-btn:hover{border-color:var(--blue);background:#f3f8ff}.reflection-answer{min-height:45px;margin-top:9px;font-size:.92rem;font-weight:700}.foot{margin-top:23px;color:#738096;font-size:.82rem;line-height:1.5;text-align:center}
+#gate{position:fixed;inset:0;background:#17233dcf;display:grid;place-items:center;z-index:10;padding:20px}.gatebox{max-width:430px;width:100%;background:#fff;border-radius:22px;padding:33px;text-align:center;border:3px solid #68a9f7;box-shadow:0 22px 65px #17233d56}.gatebox .big{font-size:3.8rem}.gatebox h2{font-size:1.65rem;color:var(--blue);margin:7px 0}.gatebox p{color:var(--muted);line-height:1.5;margin:10px 0 18px}.gatebox input{width:100%;text-align:center;border:2px solid #cedae8;border-radius:10px;padding:12px;font-size:1.2rem;letter-spacing:.09em;text-transform:uppercase}.gatebox button{width:100%;margin-top:12px}.gate-error{min-height:22px;color:var(--bad);font-weight:800;margin-top:9px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.hero-robot{display:none}.wrap{padding:22px 13px 32px}}@media(max-width:510px){.card>.inside{padding:14px}.card-head{padding:14px}.controls{grid-template-columns:1fr 1fr}.controls .field:first-child{grid-column:1/-1}.codeblock{font-size:.76rem;padding:9px}.hero{margin:14px 0 18px}.stage{min-height:215px}}@media(prefers-reduced-motion:reduce){.panda,.btn{transition:none}.panda.jumping{animation:none}}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<div class="wrap" id="app" hidden>
+ <div class="topline"><span>UOB MY DIGITAL SPACE · LOWER PRIMARY · LESSON 25</span><span class="chip">🧠 Detektif Bug V2</span></div>
+ <div class="hero"><div><span class="pill">LATIHAN INTERAKTIF • ± 5–10 MENIT</span><h1>🤖 Robot AI Sahabat:<br>Bisakah Koko Sampai ke Toko?</h1><p>Robot AI akan memberi saran kode. Namun, <strong>saran AI belum tentu benar!</strong> Bantu Koko membaca blok, mencoba, dan memperbaiki kesalahan sendiri.</p></div><div class="hero-robot" aria-hidden="true">🤖</div></div>
+ <div class="layout">
+  <div class="col">
+   <section class="card" aria-labelledby="codeTitle"><div class="card-head"><h2 id="codeTitle">1 · Kode Koko</h2><span class="pill">Bisa kamu ubah!</span></div><div class="inside">
+    <div class="goal">🎯 <div><strong>Misi Koko:</strong> berjalan <strong>ke kanan 5 langkah</strong>, lalu <strong>melompat 2 kali</strong> di dekat kotak, dan mengakhiri kode dengan <strong>End</strong>.</div></div>
+    <div class="small">Kode awal proyek memang punya bug. Coba baca dari kiri ke kanan:</div>
+    <div class="block-list" id="blockList" aria-live="polite"></div>
+    <div class="controls">
+      <label class="field">Arah bergerak<select id="direction"><option value="left">⬅️ Move Left</option><option value="right">➡️ Move Right</option></select></label>
+      <label class="field">Jumlah langkah<input id="steps" type="number" min="1" max="10" inputmode="numeric" value="4"></label>
+      <label class="field">Jumlah Hop<input id="hops" type="number" min="1" max="3" inputmode="numeric" value="2"></label>
+    </div>
+    <div class="toggles"><label><input type="checkbox" id="hopFirst"> Hop dulu, baru jalan</label><label><input type="checkbox" id="hasEnd"> Tambahkan blok End</label></div>
+    <div class="btns"><button class="btn btn-primary" id="run" type="button">▶ Jalankan Green Flag</button><button class="btn btn-ghost" id="reset" type="button">↺ Kode awal</button></div>
+   </div></section>
+   <section class="card" aria-labelledby="stageTitle"><div class="card-head"><h2 id="stageTitle">2 · Lihat Gerakan Koko</h2><span class="small">Coba dan amati hasilnya</span></div><div class="inside">
+     <div class="stage" aria-label="Panggung simulasi Koko si Panda"><span class="stage-label">PANGGUNG KOKO</span><span class="target-arrow">← kotak</span><span class="obstacle" aria-hidden="true">📦</span><span class="shelf" aria-hidden="true">🏬</span><span class="panda" id="panda" aria-label="Koko si Panda" role="img">🐼</span></div>
+     <div class="track" id="trace">Tekan <b>Jalankan Green Flag</b> untuk melihat apa yang dilakukan Koko.</div>
+     <div class="message" id="result" aria-live="polite">🔎 <strong>Belum diuji.</strong> Kamu bisa meminta saran Robot AI, tetapi tetap harus mencoba kodenya sendiri.</div>
+   </div></section>
+  </div>
+  <div class="col">
+   <section class="card" aria-labelledby="aiTitle"><div class="card-head"><h2 id="aiTitle">3 · Tanya Robot AI Sahabat</h2><span class="pill">SIMULASI, BUKAN AI SUNGGUHAN</span></div><div class="inside">
+     <div class="robot"><div class="robot-face" aria-hidden="true">🤖</div><div><p class="ai-label">ROBOT AI SAHABAT</p><p>“Hai! Aku bisa memberi saran untuk kode Koko. Tapi saranku mungkin keliru. Kamu yang harus memeriksanya!”</p></div></div>
+     <button class="btn btn-purple" id="ask" type="button">✨ Minta saran kode</button>
+     <div class="advice hidden" id="advice" aria-live="polite"><div class="rowlabel">SARAN ROBOT AI</div><div id="adviceText"></div><div class="btns"><button type="button" class="btn btn-primary" id="apply">Coba saran ini</button><button type="button" class="btn btn-ghost" id="reject">Aku cek sendiri dulu</button></div></div>
+     <p class="small" style="margin:13px 0 0">Robot ini memakai <strong>skenario jawaban yang sudah disiapkan</strong>. Tidak terhubung ke AI online dan tidak mengirim data ke internet.</p>
+   </div></section>
+   <section class="card" aria-labelledby="testTitle"><div class="card-head"><h2 id="testTitle">4 · Catatan Detektif</h2></div><div class="inside"><div class="log">
+     <div class="log-item"><b>✅ Seharusnya</b>Koko bergerak ke kanan 5 langkah, Hop 2 kali, dan berhenti.</div>
+     <div class="log-item" id="actual"><b>🔍 Ternyata</b>Belum ada hasil. Jalankan kodenya dulu.</div>
+     <div class="log-item" id="repair"><b>🔧 Perbaikan</b>Periksa arah, jumlah langkah, urutan Hop, dan blok End.</div>
+   </div></div></section>
+   <section class="card" aria-labelledby="reflectTitle"><div class="card-head"><h2 id="reflectTitle">5 · Pertanyaan untuk Detektif Kode</h2></div><div class="inside"><p class="small" style="font-size:.95rem">Kalau Robot AI memberi saran, apa yang harus kamu lakukan?</p><button class="reflection-btn" type="button" data-correct="false">Langsung percaya dan mengubah semua blok.</button><button class="reflection-btn" type="button" data-correct="true">Baca sarannya, lalu coba dengan Green Flag.</button><button class="reflection-btn" type="button" data-correct="false">Tidak perlu memperhatikan hasil gerakan Koko.</button><div class="reflection-answer" aria-live="polite" id="reflection"></div></div></section>
+  </div>
+ </div>
+ <p class="foot">Proyek UOB My Digital Space · Sesi 25 — Review Analisis Bug dan Logika AI. Kode awal mengikuti file Detektif Bug V2. Simulasi ini untuk belajar, bukan pengganti praktik CodeJR dan Checkout Quiz di LMS.</p>
+</div>
+<div id="gate"><div class="gatebox"><div class="big">🤖</div><h2>Masuk ke Robot AI Sahabat</h2><p>Masukkan kode akses yang sama dengan learning slides Lower Primary.</p><input id="access" aria-label="Kode akses" placeholder="Kode akses" maxlength="12" autocomplete="off"><button type="button" class="btn btn-primary" id="enter">Mulai latihan</button><div class="gate-error" id="gateError" role="alert"></div></div></div>
+<script>
+(() => {
+'use strict';
+const $=id=>document.getElementById(id);
+const initial={direction:'left',steps:4,hops:2,hopFirst:false,end:false};
+let running=false,runToken=0,adviceIndex=0,currentAdvice=null;
+const suggestions=[
+  {title:'Saran 1',line:'“Coba Move Left 10, lalu Hop 2 dan End. Mungkin Koko lebih cepat sampai!”',code:{direction:'left',steps:10,hops:2,hopFirst:false,end:true}},
+  {title:'Saran 2',line:'“Coba Move Right 5, lalu Hop 2 dan End. Setelah itu, uji dengan Green Flag.”',code:{direction:'right',steps:5,hops:2,hopFirst:false,end:true}},
+  {title:'Saran 3',line:'“Coba Hop 2 dulu, baru Move Right 5 dan End. Sepertinya tetap bisa!”',code:{direction:'right',steps:5,hops:2,hopFirst:true,end:true}}
+];
+const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+function code(){return {direction:$('direction').value,steps:Math.max(1,Math.min(10,Number($('steps').value)||1)),hops:Math.max(1,Math.min(3,Number($('hops').value)||1)),hopFirst:$('hopFirst').checked,end:$('hasEnd').checked};}
+function setCode(c){$('direction').value=c.direction;$('steps').value=c.steps;$('hops').value=c.hops;$('hopFirst').checked=c.hopFirst;$('hasEnd').checked=c.end;render();}
+function render(){const c=code();const move=`<span class="codeblock move">${c.direction==='left'?'⬅️ Move Left':'➡️ Move Right'} ${c.steps}</span>`;const hop=`<span class="codeblock hop">⬆️ Hop ${c.hops}</span>`;const seq=c.hopFirst?[hop,move]:[move,hop];$('blockList').innerHTML=['<span class="codeblock start">🏁 Green Flag</span>',...seq,c.end?'<span class="codeblock end">🛑 End</span>':'<span class="codeblock missing">+ End belum ada</span>'].join('<span class="tiny-arrow">›</span>');}
+function pandaTo(x){$('panda').style.left=`${Math.min(96,Math.max(2,x))}%`;}
+function resetStage(){runToken++;running=false;pandaTo(13);$('panda').classList.remove('jumping');$('trace').innerHTML='Tekan <b>Jalankan Green Flag</b> untuk melihat hasil kode.';$('result').className='message';$('result').innerHTML='🔎 <strong>Belum diuji.</strong> Coba kode dan perhatikan gerakan Koko.';$('actual').innerHTML='<b>🔍 Ternyata</b>Belum ada hasil. Jalankan kodenya dulu.';$('repair').innerHTML='<b>🔧 Perbaikan</b>Periksa arah, langkah, urutan Hop, dan blok End.';setBusy(false);}
+function setBusy(b){for(const id of ['run','reset','ask','apply','reject','direction','steps','hops','hopFirst','hasEnd']){const el=$(id);if(el)el.disabled=b;}}
+async function run(){if(running)return;running=true;const token=++runToken;setBusy(true);const c=code();let x=13;const trace=[];pandaTo(x);$('result').className='message';$('result').textContent='▶ Koko sedang mengikuti blok satu per satu...';trace.push('Green Flag: mulai');
+  async function move(){for(let i=0;i<c.steps;i++){if(token!==runToken)return;x+=(c.direction==='right'?9:-9);pandaTo(x);await sleep(250);}trace.push(`${c.direction==='right'?'Move Right':'Move Left'} ${c.steps}`);}
+  async function jump(){for(let i=0;i<c.hops;i++){if(token!==runToken)return;$('panda').classList.remove('jumping');void $('panda').offsetWidth;$('panda').classList.add('jumping');await sleep(410);$('panda').classList.remove('jumping');}trace.push(`Hop ${c.hops}`);}
+  await sleep(230);if(c.hopFirst){await jump();await move();}else{await move();await jump();}if(token!==runToken)return;if(c.end)trace.push('End');$('trace').textContent='Code tracing: '+trace.join(' → ');
+  let reason='';if(c.direction!=='right'){reason='Koko berjalan ke kiri, padahal rak ada di kanan.';}else if(c.steps!==5){reason=c.steps>5?'Koko berjalan terlalu jauh dari kotak.':'Koko belum sampai ke dekat kotak.';}else if(c.hopFirst){reason='Koko melompat terlalu awal, sebelum berjalan menuju kotak.';}else if(c.hops!==2){reason='Koko perlu melompat 2 kali, belum sesuai misi.';}else if(!c.end){reason='Gerakannya cocok, tetapi blok End masih belum ada.';}
+  const ok=!reason;
+  $('result').className='message '+(ok?'good':'bad');$('result').innerHTML=ok?'🎉 <strong>Berhasil!</strong> Koko sampai di tempat yang tepat. Kamu sudah memeriksa kode dengan Green Flag!':'🐞 <strong>Masih ada bug.</strong> '+reason;
+  $('actual').innerHTML='<b>🔍 Ternyata</b>'+ (ok?'Koko ke kanan 5 langkah, Hop 2 kali, lalu End.':reason);
+  $('repair').innerHTML='<b>🔧 Perbaikan</b>'+(ok?'Tidak perlu diubah lagi. Simpan kode yang sudah benar.':'Periksa blok yang menyebabkan masalah, ubah satu hal, lalu jalankan Green Flag lagi.');
+  running=false;setBusy(false);
+}
+function ask(){currentAdvice=suggestions[adviceIndex % suggestions.length];adviceIndex++;$('advice').classList.remove('hidden');$('adviceText').textContent=currentAdvice.line;$('advice').querySelector('.rowlabel').textContent=currentAdvice.title.toUpperCase();}
+$('enter').addEventListener('click',()=>{if($('access').value.trim().toUpperCase()==='RGMDSLP26'){$('gate').style.display='none';$('app').hidden=false;}else{$('gateError').textContent='Kode belum benar. Periksa lagi, ya.';$('access').select();}});
+$('access').addEventListener('keydown',e=>{if(e.key==='Enter')$('enter').click();});
+for(const id of ['direction','steps','hops','hopFirst','hasEnd'])$(id).addEventListener('change',()=>{render();$('result').className='message';$('result').textContent='Kode diubah. Tekan Green Flag untuk menguji hasil baru.';});
+$('reset').addEventListener('click',()=>{setCode(initial);resetStage();$('advice').classList.add('hidden');});
+$('run').addEventListener('click',run);
+$('ask').addEventListener('click',ask);
+$('apply').addEventListener('click',()=>{if(!currentAdvice)return;setCode(currentAdvice.code);resetStage();$('result').textContent='Saran Robot AI sudah dicoba pada kode. Sekarang tekan Green Flag untuk membuktikannya!';});
+$('reject').addEventListener('click',()=>{$('advice').classList.add('hidden');$('result').className='message';$('result').textContent='Bagus! Kamu boleh memeriksa sendiri dan mencoba kode sebelum percaya pada saran.';});
+document.querySelectorAll('.reflection-btn').forEach(button=>button.addEventListener('click',()=>{const good=button.dataset.correct==='true';$('reflection').textContent=good?'✅ Tepat! Saran AI perlu dibaca, dicoba, dan diperiksa hasilnya.':'🔎 Coba pikirkan lagi. Saran AI bisa salah. Kita perlu mengujinya dulu.';$('reflection').style.color=good?'#15803d':'#af3029';}));
+setCode(initial);resetStage();
+})();
+</script>
+</body>
+</html>
